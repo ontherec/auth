@@ -39,3 +39,6 @@ out/
 ### Env ###
 *.env
 *secret.properties
+
+### Data ###
+*.sql
