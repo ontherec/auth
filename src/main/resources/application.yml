@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: authorization
+  profiles:
+    default: local
+  config:
+    import:
+      - classpath:application-secret.properties # TODO: Github Action Secrets
+  web:
+    resources:
+      add-mappings: false
+  jpa:
+    open-in-view: false
+
+server:
+  port: 9000
