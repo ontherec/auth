@@ -88,7 +88,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)
-                .formLogin(flc -> flc.defaultSuccessUrl("/"));
+                .formLogin(flc -> flc.defaultSuccessUrl("/"))
+                .oauth2Login(Customizer.withDefaults());
+
         return http.build();
     }
 
