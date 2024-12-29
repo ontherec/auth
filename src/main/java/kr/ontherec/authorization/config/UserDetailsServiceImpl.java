@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Member member = memberRepository.findByUsernameOrThrow(username);
 
         List<GrantedAuthority> authorities = member.getAuthorities().stream()
-                .map(role -> new SimpleGrantedAuthority(role.toString()))
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
 
         return new User(member.getUsername(), member.getPassword(), authorities);
