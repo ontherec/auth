@@ -1,6 +1,5 @@
 package kr.ontherec.authorization.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -26,23 +25,21 @@ public class Member {
     /**
      * login id or open id
      */
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String username;
 
     private String password;
 
-    @Column(nullable = false, length = 15)
     private String name;
 
-    @Column(unique = true, nullable = false, length = 15)
+    @Column(unique = true)
     private String phone;
 
-    @Column(unique = true, nullable = false, length = 15)
+    @Column(unique = true)
     private String nickname;
 
     private String imageUrl;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
-    @JsonIgnore
     private Set<Authority> authorities;
 }
