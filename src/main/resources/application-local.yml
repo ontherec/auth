@@ -18,4 +18,4 @@ spring:
 logging:
   level:
     org:
-      springframework: trace
+      springframework: debug
