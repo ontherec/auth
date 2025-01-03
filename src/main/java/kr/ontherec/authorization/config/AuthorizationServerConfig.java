@@ -48,22 +48,18 @@ public class AuthorizationServerConfig {
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http, UserInfoMapper userInfoMapper) throws Exception {
         OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = OAuth2AuthorizationServerConfigurer.authorizationServer();
 
         http.securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
-                .with(authorizationServerConfigurer, (authorizationServer) -> authorizationServer
-                        .oidc(Customizer.withDefaults())
-                )
-                .exceptionHandling((exceptions) -> exceptions
+                .with(authorizationServerConfigurer, asc -> asc.oidc(oc -> oc.userInfoEndpoint(uec -> uec.userInfoMapper(userInfoMapper))))
+                .exceptionHandling(ehc -> ehc
                         .defaultAuthenticationEntryPointFor(
                                 new LoginUrlAuthenticationEntryPoint("/login"),
                                 new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
                         )
                 )
-                .oauth2ResourceServer((resourceServer) -> resourceServer
-                        .jwt(Customizer.withDefaults())
-                );
+                .oauth2ResourceServer(rsc -> rsc.jwt(Customizer.withDefaults()));
 
         return http.build();
     }

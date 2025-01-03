@@ -19,7 +19,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -38,7 +37,7 @@ public class FederatedIdentityAuthenticationSuccessHandler implements Authentica
 			OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
 			Map<String, Object> claims = oauth2User.getAttributes();
 
-			logger.trace("\u001B[31m" + "social login: {}" + "\u001B[0m", clientRegistrationId);
+			logger.debug("\u001B[31m" + "social login: {}" + "\u001B[0m", clientRegistrationId);
 
 			for (ClientRegistrationStrategy strategy : strategies) {
 				if (strategy.isSupport(clientRegistrationId)) {
