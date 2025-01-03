@@ -2,7 +2,6 @@ package kr.ontherec.authorization.config.strategy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import kr.ontherec.authorization.entity.Member;
@@ -47,7 +46,6 @@ public class GoogleStrategy implements ClientRegistrationStrategy{
                     .username(sub)
                     .imageUrl(picture)
                     .name(name)
-                    .authorities(new HashSet<>())
                     .build();
         }
     }

@@ -2,7 +2,6 @@ package kr.ontherec.authorization.config.strategy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Map;
 import kr.ontherec.authorization.entity.Member;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +54,6 @@ public class KakaoStrategy implements ClientRegistrationStrategy {
                     .username(this.id())
                     .nickname(this.properties().nickname())
                     .imageUrl(this.properties().profile_image())
-                    .authorities(new HashSet<>())
                     .build();
         }
     }

@@ -1,7 +1,6 @@
 package kr.ontherec.authorization.config.strategy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.HashSet;
 import java.util.Map;
 import kr.ontherec.authorization.entity.Member;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +43,6 @@ public class NaverStrategy implements ClientRegistrationStrategy{
                     .imageUrl(response.profile_image)
                     .phone(response.mobile)
                     .name(response.name)
-                    .authorities(new HashSet<>())
                     .build();
         }
     }
