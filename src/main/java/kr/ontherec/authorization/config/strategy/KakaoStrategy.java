@@ -53,7 +53,7 @@ public class KakaoStrategy implements ClientRegistrationStrategy {
             return Member.builder()
                     .username(this.id())
                     .nickname(this.properties().nickname())
-                    .imageUrl(this.properties().profile_image())
+                    .picture(this.properties().profile_image())
                     .build();
         }
     }

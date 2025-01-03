@@ -11,8 +11,8 @@ import lombok.Getter;
 
 @Entity
 @Getter
-@Table(name="authorities")
-public class Authority {
+@Table(name="roles")
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

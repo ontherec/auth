@@ -40,8 +40,8 @@ public class NaverStrategy implements ClientRegistrationStrategy{
             return Member.builder()
                     .username(response.id)
                     .nickname(response.nickname)
-                    .imageUrl(response.profile_image)
-                    .phone(response.mobile)
+                    .picture(response.profile_image)
+                    .phoneNumber(response.mobile)
                     .name(response.name)
                     .build();
         }

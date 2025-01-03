@@ -39,13 +39,13 @@ public class Member {
     private String name;
 
     @Column(unique = true)
-    private String phone;
-
-    @Column(unique = true)
     private String nickname;
 
-    private String imageUrl;
+    @Column(unique = true)
+    private String phoneNumber;
+
+    private String picture;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
-    private Set<Authority> authorities;
+    private Set<Role> roles;
 }
