@@ -14,6 +14,12 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
 
+    @Override
+    public Member findByUsername(String username) {
+        return memberRepository.findByUsernameOrThrow(username);
+    }
+
+    @Override
     public void createIfNotExists(Member member) {
         if (!memberRepository.existsByUsername(member.getUsername())) {
             memberRepository.save(member);
