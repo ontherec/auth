@@ -1,4 +1,4 @@
-package kr.ontherec.authorization.entity;
+package kr.ontherec.authorization.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

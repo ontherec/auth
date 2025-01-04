@@ -1,6 +1,6 @@
 package kr.ontherec.authorization.service;
 
-import kr.ontherec.authorization.entity.Member;
+import kr.ontherec.authorization.domain.Member;
 
 public interface MemberService {
     Member findByUsername(String username);

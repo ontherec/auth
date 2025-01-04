@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 import java.util.function.Function;
-import kr.ontherec.authorization.entity.Member;
+import kr.ontherec.authorization.domain.Member;
 import kr.ontherec.authorization.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;

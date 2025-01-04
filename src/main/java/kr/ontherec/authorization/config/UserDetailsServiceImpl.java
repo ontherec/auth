@@ -2,8 +2,8 @@ package kr.ontherec.authorization.config;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import kr.ontherec.authorization.entity.Member;
-import kr.ontherec.authorization.repository.MemberRepository;
+import kr.ontherec.authorization.domain.Member;
+import kr.ontherec.authorization.persistence.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

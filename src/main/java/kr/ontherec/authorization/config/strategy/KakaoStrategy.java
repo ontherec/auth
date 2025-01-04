@@ -3,7 +3,7 @@ package kr.ontherec.authorization.config.strategy;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.util.Map;
-import kr.ontherec.authorization.entity.Member;
+import kr.ontherec.authorization.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

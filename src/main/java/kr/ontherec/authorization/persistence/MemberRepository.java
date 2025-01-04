@@ -1,7 +1,7 @@
-package kr.ontherec.authorization.repository;
+package kr.ontherec.authorization.persistence;
 
 import java.util.Optional;
-import kr.ontherec.authorization.entity.Member;
+import kr.ontherec.authorization.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;

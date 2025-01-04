@@ -1,6 +1,6 @@
 package kr.ontherec.authorization.service.mapper;
 
-import kr.ontherec.authorization.entity.Member;
+import kr.ontherec.authorization.domain.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;

@@ -1,7 +1,7 @@
 package kr.ontherec.authorization.service;
 
-import kr.ontherec.authorization.entity.Member;
-import kr.ontherec.authorization.repository.MemberRepository;
+import kr.ontherec.authorization.domain.Member;
+import kr.ontherec.authorization.persistence.MemberRepository;
 import kr.ontherec.authorization.service.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

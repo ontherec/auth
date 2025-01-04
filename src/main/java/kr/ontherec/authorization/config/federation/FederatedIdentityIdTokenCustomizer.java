@@ -2,7 +2,7 @@ package kr.ontherec.authorization.config.federation;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-import kr.ontherec.authorization.entity.Member;
+import kr.ontherec.authorization.domain.Member;
 import kr.ontherec.authorization.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
