@@ -1,4 +1,4 @@
-package kr.ontherec.authorization.domain;
+package kr.ontherec.authorization.member.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

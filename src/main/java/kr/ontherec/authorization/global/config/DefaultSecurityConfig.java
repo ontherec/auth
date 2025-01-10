@@ -1,4 +1,4 @@
-package kr.ontherec.authorization.config;
+package kr.ontherec.authorization.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

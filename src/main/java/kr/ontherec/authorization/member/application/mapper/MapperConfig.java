@@ -1,4 +1,4 @@
-package kr.ontherec.authorization.service.mapper;
+package kr.ontherec.authorization.member.application.mapper;
 
 import static org.mapstruct.NullValueCheckStrategy.ALWAYS;
 import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;

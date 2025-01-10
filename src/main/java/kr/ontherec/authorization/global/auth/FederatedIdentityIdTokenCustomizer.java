@@ -1,9 +1,9 @@
-package kr.ontherec.authorization.config.federation;
+package kr.ontherec.authorization.global.auth;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-import kr.ontherec.authorization.domain.Member;
-import kr.ontherec.authorization.service.MemberService;
+import kr.ontherec.authorization.member.domain.Member;
+import kr.ontherec.authorization.member.application.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ public final class FederatedIdentityIdTokenCustomizer implements OAuth2TokenCust
         logger.debug("\u001B[31m" + "issue {} token: {}" + "\u001B[0m", context.getTokenType().getValue(), context.getPrincipal().getName());
 
         if (context.getTokenType().getValue().equals(OidcParameterNames.ID_TOKEN)) {
-            Member findMember = memberService.findByUsername(context.getPrincipal().getName());
+            Member findMember = memberService.getByUsername(context.getPrincipal().getName());
             Set<String> roles = findMember.getRoles().stream()
                     .map(Object::toString)
                     .collect(Collectors.toSet());

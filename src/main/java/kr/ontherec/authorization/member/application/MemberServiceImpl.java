@@ -1,8 +1,8 @@
-package kr.ontherec.authorization.service;
+package kr.ontherec.authorization.member.application;
 
-import kr.ontherec.authorization.domain.Member;
-import kr.ontherec.authorization.persistence.MemberRepository;
-import kr.ontherec.authorization.service.mapper.MemberMapper;
+import kr.ontherec.authorization.member.application.mapper.MemberMapper;
+import kr.ontherec.authorization.member.domain.Member;
+import kr.ontherec.authorization.member.dao.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,12 +15,12 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
     @Override
-    public Member findByUsername(String username) {
+    public Member getByUsername(String username) {
         return memberRepository.findByUsernameOrThrow(username);
     }
 
     @Override
-    public void createIfNotExists(Member member) {
+    public void saveMember(Member member) {
         if (!memberRepository.existsByUsername(member.getUsername())) {
             memberRepository.save(member);
             return;
