@@ -1,3 +1,6 @@
+server:
+  port: 9000
+
 spring:
   application:
     name: authorization
@@ -12,14 +15,6 @@ spring:
       add-mappings: false
   jpa:
     open-in-view: false
-
-server:
-  port: 9000
-
-logging:
-  pattern:
-    console: "%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %msg%n}"
-
 authorization-server:
   client-id: ${AUTHORIZATION_CLIENT_ID}
   redirect-uri: ${AUTHORIZATION_REDIRECT_URI}
