@@ -54,6 +54,7 @@ public class AuthorizationServerConfig {
 
         http.securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
                 .with(authorizationServerConfigurer, asc -> asc.oidc(oc -> oc.userInfoEndpoint(uec -> uec.userInfoMapper(userInfoMapper))))
+                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
                 .exceptionHandling(ehc -> ehc
                         .defaultAuthenticationEntryPointFor(
                                 new LoginUrlAuthenticationEntryPoint("/login"),
