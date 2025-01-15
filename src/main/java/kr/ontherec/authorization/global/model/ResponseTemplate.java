@@ -12,14 +12,14 @@ public class ResponseTemplate {
     private Object data;
 
     public static ResponseTemplate success(SuccessCode code) {
-        return new ResponseTemplate(true, code.message(), null);
+        return new ResponseTemplate(true, code.getMessage(), null);
     }
 
     public static  ResponseTemplate success(SuccessCode code, Object data) {
-        return new ResponseTemplate(true, code.message(), data);
+        return new ResponseTemplate(true, code.getMessage(), data);
     }
 
     public static ResponseTemplate error(ExceptionCode code) {
-        return new ResponseTemplate(false, code.message(), null);
+        return new ResponseTemplate(false, code.getMessage(), null);
     }
 }

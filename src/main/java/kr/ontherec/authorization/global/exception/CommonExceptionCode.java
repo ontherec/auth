@@ -29,16 +29,6 @@ public enum CommonExceptionCode implements ExceptionCode {
 	// 500 Internal Server Error
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다.");
 
-	public final HttpStatus status;
-	public final String message;
-
-	@Override
-	public HttpStatus status() {
-		return this.status;
-	}
-
-	@Override
-	public String message() {
-		return this.message;
-	}
+	private final HttpStatus status;
+	private final String message;
 }

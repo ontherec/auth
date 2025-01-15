@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(CustomException.class)
 	public ResponseEntity<ResponseTemplate> handleCustomException(CustomException ex) {
 		log.error("🚨 CustomException occurred: {} 🚨\n{}", ex.getMessage(), getStackTraceAsString(ex));
-		return ResponseEntity.status(ex.getExceptionCode().status())
+		return ResponseEntity.status(ex.getExceptionCode().getStatus())
 			.body(ResponseTemplate.error(ex.getExceptionCode()));
 	}
 
@@ -87,13 +87,13 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(AuthenticationException.class)
-	public ResponseEntity<ResponseTemplate> handleAuthenticationException(AuthenticationException ex) {
+	public ResponseEntity<ResponseTemplate> handleAuthenticationException() {
 		return ResponseEntity.status(UNAUTHORIZED.getStatus())
 				.body(ResponseTemplate.error(UNAUTHORIZED));
 	}
 
 	@ExceptionHandler(AccessDeniedException.class)
-	public ResponseEntity<ResponseTemplate> handleAccessDeniedException(AccessDeniedException ex) {
+	public ResponseEntity<ResponseTemplate> handleAccessDeniedException() {
 		return ResponseEntity.status(FORBIDDEN.getStatus())
 				.body(ResponseTemplate.error(FORBIDDEN));
 	}
