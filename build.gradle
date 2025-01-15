@@ -49,6 +49,7 @@ dependencies {
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testCompileOnly 'org.assertj:assertj-core'
 
 	// logging
 	implementation 'org.tinylog:tinylog-api:2.7.0'
