@@ -30,8 +30,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @Slf4j
 public class GlobalExceptionHandler {
 
-	@ExceptionHandler(CustomException.class)
-	public ResponseEntity<ResponseTemplate> handleCustomException(CustomException ex) {
+	@ExceptionHandler(CommonException.class)
+	public ResponseEntity<ResponseTemplate> handleCustomException(CommonException ex) {
 		log.error("🚨 CustomException occurred: {} 🚨\n{}", ex.getMessage(), getStackTraceAsString(ex));
 		return ResponseEntity.status(ex.getExceptionCode().getStatus())
 			.body(ResponseTemplate.error(ex.getExceptionCode()));

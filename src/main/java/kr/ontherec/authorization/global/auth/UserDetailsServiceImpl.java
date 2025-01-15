@@ -2,6 +2,8 @@ package kr.ontherec.authorization.global.auth;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import kr.ontherec.authorization.global.exception.CommonException;
+import kr.ontherec.authorization.global.exception.CommonExceptionCode;
 import kr.ontherec.authorization.member.domain.Member;
 import kr.ontherec.authorization.member.dao.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +25,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberRepository.findByUsernameOrThrow(username);
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new CommonException(CommonExceptionCode.UNAUTHORIZED));
 
         List<GrantedAuthority> authorities = member.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
