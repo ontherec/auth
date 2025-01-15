@@ -1,8 +1,9 @@
 package kr.ontherec.authorization.member.application;
 
-import kr.ontherec.authorization.member.application.mapper.MemberMapper;
-import kr.ontherec.authorization.member.domain.Member;
 import kr.ontherec.authorization.member.dao.MemberRepository;
+import kr.ontherec.authorization.member.domain.Member;
+import kr.ontherec.authorization.member.exception.MemberException;
+import kr.ontherec.authorization.member.exception.MemberExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,14 +21,15 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void saveMember(Member member) {
+    public void register(Member member) {
         if (!memberRepository.existsByUsername(member.getUsername())) {
-            memberRepository.save(member);
-            return;
-        }
+            if(memberRepository.existsByNickname(member.getNickname()))
+                throw new MemberException(MemberExceptionCode.EXIST_NICKNAME);
 
-        Member findMember = memberRepository.findByUsernameOrThrow(member.getUsername());
-        MemberMapper.INSTANCE.update(member, findMember);
-        memberRepository.save(findMember);
+            if(memberRepository.existsByPhoneNumber(member.getPhoneNumber()))
+                throw new MemberException(MemberExceptionCode.EXIST_PHONE_NUMBER);
+
+            memberRepository.save(member);
+        }
     }
 }

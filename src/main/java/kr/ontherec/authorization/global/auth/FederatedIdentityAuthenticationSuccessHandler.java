@@ -42,7 +42,7 @@ public class FederatedIdentityAuthenticationSuccessHandler implements Authentica
 			for (ClientRegistrationStrategy strategy : strategies) {
 				if (strategy.isSupport(clientRegistrationId)) {
 					Member newMember = strategy.parseClaimsToMember(claims);
-					memberService.saveMember(newMember);
+					memberService.register(newMember);
 				}
 			}
 		}

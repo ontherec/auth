@@ -4,5 +4,5 @@ import kr.ontherec.authorization.member.domain.Member;
 
 public interface MemberService {
     Member getByUsername(String username);
-    void saveMember(Member member);
+    void register(Member member);
 }
