@@ -1,4 +1,4 @@
-package kr.ontherec.authorization.global.auth.strategy;
+package kr.ontherec.authorization.security.strategy;
 
 import java.util.Map;
 import kr.ontherec.authorization.member.domain.Member;

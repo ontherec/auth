@@ -1,9 +1,9 @@
-package kr.ontherec.authorization.global.auth;
+package kr.ontherec.authorization.security;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-import kr.ontherec.authorization.member.domain.Member;
 import kr.ontherec.authorization.member.application.MemberService;
+import kr.ontherec.authorization.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;

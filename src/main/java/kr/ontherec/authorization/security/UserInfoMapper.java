@@ -1,4 +1,4 @@
-package kr.ontherec.authorization.global.auth;
+package kr.ontherec.authorization.security;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

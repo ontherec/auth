@@ -1,4 +1,4 @@
-package kr.ontherec.authorization.global.config;
+package kr.ontherec.authorization.security.config;
 
 import static org.springframework.security.oauth2.core.oidc.OidcScopes.OPENID;
 
@@ -13,7 +13,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.time.Duration;
 import java.util.UUID;
-import kr.ontherec.authorization.global.auth.UserInfoMapper;
+import kr.ontherec.authorization.security.UserInfoMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

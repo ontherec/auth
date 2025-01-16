@@ -1,11 +1,11 @@
-package kr.ontherec.authorization.global.auth;
+package kr.ontherec.authorization.security;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import kr.ontherec.authorization.global.exception.CommonException;
-import kr.ontherec.authorization.global.exception.CommonExceptionCode;
-import kr.ontherec.authorization.member.domain.Member;
 import kr.ontherec.authorization.member.dao.MemberRepository;
+import kr.ontherec.authorization.member.domain.Member;
+import kr.ontherec.authorization.security.exception.SecurityException;
+import kr.ontherec.authorization.security.exception.SecurityExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Member member = memberRepository.findByUsername(username)
-                .orElseThrow(() -> new CommonException(CommonExceptionCode.UNAUTHORIZED));
+                .orElseThrow(() -> new SecurityException(SecurityExceptionCode.UNAUTHORIZED));
 
         List<GrantedAuthority> authorities = member.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))

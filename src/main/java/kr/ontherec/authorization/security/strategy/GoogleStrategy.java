@@ -1,4 +1,4 @@
-package kr.ontherec.authorization.global.auth.strategy;
+package kr.ontherec.authorization.security.strategy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;

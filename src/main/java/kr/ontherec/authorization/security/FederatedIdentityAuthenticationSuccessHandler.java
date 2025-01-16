@@ -1,4 +1,4 @@
-package kr.ontherec.authorization.global.auth;
+package kr.ontherec.authorization.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import kr.ontherec.authorization.global.auth.strategy.ClientRegistrationStrategy;
+import kr.ontherec.authorization.security.strategy.ClientRegistrationStrategy;
 import kr.ontherec.authorization.member.application.MemberService;
 import kr.ontherec.authorization.member.domain.Member;
 import lombok.RequiredArgsConstructor;
