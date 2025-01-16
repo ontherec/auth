@@ -16,6 +16,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public Member getByUsername(String username) {
         return memberRepository.findByUsernameOrThrow(username);
     }

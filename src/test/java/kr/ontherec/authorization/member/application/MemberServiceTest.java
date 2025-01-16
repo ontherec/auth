@@ -19,7 +19,7 @@ class MemberServiceTest {
     private MemberService memberService;
 
     @Test
-    @DisplayName("ID로 사용자 조회 성공")
+    @DisplayName("사용자 조회 성공")
     void getExistUserByUsername() {
         // given
         String username = "test";
@@ -32,7 +32,7 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("존재하지 않는 ID로 사용자 조회 실패")
+    @DisplayName("사용자 조회 실패 - 존재하지 않는 ID")
     void getNotExistUserByUsername() {
         // given
         String username = "new";
@@ -47,7 +47,7 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("새로운 사용자로 회원가입 성공")
+    @DisplayName("회원가입 성공")
     void registerNewMember() {
         // given
         Member newMember = Member.builder()
@@ -65,7 +65,7 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("중복된 닉네임으로 새로운 사용자 회원가입 실패")
+    @DisplayName("사용자 회원가입 실패 - 닉네임 중복")
     void registerNewMemberWithDuplicatedNickname() {
         // given
         Member newMember = Member.builder()
@@ -84,7 +84,7 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("중복된 전화번호로 새로운 사용자 회원가입 실패")
+    @DisplayName("사용자 회원가입 실패 - 전화번호 중복")
     void registerNewMemberWithDuplicatedPhoneNumber() {
         // given
         Member newMember = Member.builder()
