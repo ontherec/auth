@@ -15,11 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 @Transactional
 class MemberServiceTest {
+
     @Autowired
     private MemberService memberService;
 
     @Test
     @DisplayName("사용자 조회 성공")
+    @Transactional(readOnly = true)
     void getExistUserByUsername() {
         // given
         String username = "test";
@@ -33,6 +35,7 @@ class MemberServiceTest {
 
     @Test
     @DisplayName("사용자 조회 실패 - 존재하지 않는 ID")
+    @Transactional(readOnly = true)
     void getNotExistUserByUsername() {
         // given
         String username = "new";
