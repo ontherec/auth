@@ -37,7 +37,7 @@ public class FederatedIdentityAuthenticationSuccessHandler implements Authentica
 			OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
 			Map<String, Object> claims = oauth2User.getAttributes();
 
-			logger.debug("\u001B[31m" + "social login: {}" + "\u001B[0m", clientRegistrationId);
+			logger.debug("social login: {}", clientRegistrationId);
 
 			for (ClientRegistrationStrategy strategy : strategies) {
 				if (strategy.isSupport(clientRegistrationId)) {
