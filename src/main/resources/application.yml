@@ -9,7 +9,6 @@ spring:
   config:
     import:
       - classpath:external/oauth2-registration.yml
-      - classpath:application-secret.properties # TODO: Github Action Secrets
   web:
     resources:
       add-mappings: false
