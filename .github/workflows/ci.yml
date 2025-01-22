@@ -1,4 +1,4 @@
-name: Authorization Server CI
+name: Continuous Integration
 
 on:
   pull_request:
@@ -27,7 +27,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
 
     env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DATABASE_URL: jdbc:mysql://local:3306/${{ secrets.MYSQL_DATABASE }}
       DATABASE_USERNAME: ${{ secrets.MYSQL_USER }}
       DATABASE_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
       AUTHORIZATION_CLIENT_ID: ${{ secrets.AUTHORIZATION_CLIENT_ID }}
@@ -51,14 +51,14 @@ jobs:
       uses: gradle/actions/setup-gradle@v4
 
     - name: Caching CI
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
         path: |
           ~/.gradle/caches
           ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
 
     - name: Build with Gradle Wrapper
       run: |
