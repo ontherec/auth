@@ -1,8 +1,8 @@
-package kr.ontherec.authorization.global.model;
+package kr.ontherec.authorization.global.exception;
 
 import org.springframework.http.HttpStatus;
 
-public interface SuccessCode {
+public interface ExceptionCode {
     HttpStatus getStatus();
     String getMessage();
 }

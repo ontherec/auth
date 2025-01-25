@@ -1,6 +1,6 @@
 package kr.ontherec.authorization.member.exception;
 
-import kr.ontherec.authorization.global.model.ExceptionCode;
+import kr.ontherec.authorization.global.exception.ExceptionCode;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -7,7 +7,7 @@ import java.util.Set;
 import kr.ontherec.authorization.member.domain.Role;
 import org.hibernate.validator.constraints.URL;
 
-public record MemberSignUpDto (
+public record MemberSignUpRequestDto(
         @NotBlank(message = "사용자 ID를 입력해주세요")
         @Size(max = 255, message = "사용자 ID는 최대 255글자 입니다")
         String username,
