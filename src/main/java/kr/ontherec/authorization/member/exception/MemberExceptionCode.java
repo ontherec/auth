@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 public enum MemberExceptionCode implements ExceptionCode {
 
     // 400 Bad Request
+    EXIST_USERNAME(HttpStatus.BAD_REQUEST, "이미 사용 중인 ID 입니다."),
     EXIST_NICKNAME(HttpStatus.BAD_REQUEST, "이미 사용 중인 닉네임 입니다."),
     EXIST_PHONE_NUMBER(HttpStatus.BAD_REQUEST, "이미 사용 중인 전화번호 입니다."),
 
