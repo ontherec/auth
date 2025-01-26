@@ -10,8 +10,4 @@ public class MemberException extends RuntimeException {
         super(exceptionCode.getMessage());
         this.exceptionCode = exceptionCode;
     }
-
-    public int getHttpStatus() {
-        return exceptionCode.getStatus().value();
-    }
 }

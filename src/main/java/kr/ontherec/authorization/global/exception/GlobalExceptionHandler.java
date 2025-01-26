@@ -23,6 +23,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(CommonException.class)
 	public ResponseEntity<ExceptionCode> handleCustomException(CommonException ex) {
 		log.error("🚨 CustomException occurred: {} 🚨\n{}", ex.getMessage(), getStackTraceAsString(ex));
+
 		return ResponseEntity.status(ex.getExceptionCode().getStatus())
 			.body(ex.getExceptionCode());
 	}
@@ -30,6 +31,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(RuntimeException.class)
 	public ResponseEntity<ExceptionCode> handleServerException(RuntimeException ex) {
 		log.error("🚨 InternalException occurred: {} 🚨\n{}", ex.getMessage(), getStackTraceAsString(ex));
+
 		return ResponseEntity.status(CommonExceptionCode.INTERNAL_SERVER_ERROR.getStatus())
 			.body(CommonExceptionCode.INTERNAL_SERVER_ERROR);
 	}
@@ -47,7 +49,7 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(HandlerMethodValidationException.class)
-	public ResponseEntity<ExceptionCode> handleHandlerMethodValidationException() {
+	public ResponseEntity<ExceptionCode> handleHandlerMethodValidationException(HandlerMethodValidationException ex) {
 		return ResponseEntity.status(CommonExceptionCode.NOT_VALID.getStatus())
 			.body(CommonExceptionCode.NOT_VALID);
 	}

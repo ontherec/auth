@@ -9,12 +9,10 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum SecurityExceptionCode implements ExceptionCode {
-	// 401 Unauthorized
-	UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "유효한 자격 증명이 없습니다."),
+	UNAUTHORIZED("AS001", HttpStatus.UNAUTHORIZED, "유효한 자격 증명이 없습니다."),
+	FORBIDDEN("AS002", HttpStatus.FORBIDDEN, "리소스 접근 권한이 없습니다.");
 
-	// 403 Forbidden
-	FORBIDDEN(HttpStatus.FORBIDDEN, "리소스 접근 권한이 없습니다.");
-
+	private final String code;
 	private final HttpStatus status;
 	private final String message;
 }
