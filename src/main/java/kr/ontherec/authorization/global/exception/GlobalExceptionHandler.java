@@ -2,7 +2,10 @@ package kr.ontherec.authorization.global.exception;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
@@ -43,9 +46,14 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ExceptionCode> handleValidationError() {
+	public ResponseEntity<Map<String, Object>> handleValidationError(MethodArgumentNotValidException ex) {
+
+		List<String> messages = ex.getAllErrors().stream()
+				.map(MessageSourceResolvable::getDefaultMessage)
+				.toList();
+
 		return ResponseEntity.status(CommonExceptionCode.NOT_VALID.getStatus())
-			.body(CommonExceptionCode.NOT_VALID);
+				.body(Map.of("code", CommonExceptionCode.NOT_VALID.getCode(), "messages", messages));
 	}
 
 	@ExceptionHandler(HandlerMethodValidationException.class)
