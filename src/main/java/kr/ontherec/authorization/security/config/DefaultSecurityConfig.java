@@ -21,7 +21,9 @@ public class DefaultSecurityConfig {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .headers(hc -> hc.frameOptions(FrameOptionsConfig::sameOrigin)) // h2 console
-                .authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/v1/signup").permitAll()
+                        .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(Customizer.withDefaults())
                 .oauth2Login(olc -> olc.successHandler(authenticationSuccessHandler));
