@@ -3,10 +3,10 @@ package kr.ontherec.authorization.global.exception;
 import lombok.Getter;
 
 @Getter
-public class CommonException extends RuntimeException {
-    private final CommonExceptionCode exceptionCode;
+public class CustomException extends RuntimeException {
+    private final ExceptionCode exceptionCode;
 
-    public CommonException(CommonExceptionCode exceptionCode) {
+    public CustomException(ExceptionCode exceptionCode) {
         super(exceptionCode.getMessage());
         this.exceptionCode = exceptionCode;
     }
