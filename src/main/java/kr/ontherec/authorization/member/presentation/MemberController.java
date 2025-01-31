@@ -1,6 +1,7 @@
 package kr.ontherec.authorization.member.presentation;
 
 import jakarta.validation.Valid;
+import java.net.URI;
 import kr.ontherec.authorization.member.application.MemberService;
 import kr.ontherec.authorization.member.application.mapper.MemberMapper;
 import kr.ontherec.authorization.member.domain.Member;
@@ -26,6 +27,8 @@ public class MemberController {
         Member newMember = mapper.signUpRequestDtoToEntity(requestDto);
         Member savedMember = memberService.register(newMember);
         MemberResponseDto responseDto = mapper.entityToResponseDto(savedMember);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .location(URI.create("/v1/me"))
+                .body(responseDto);
     }
 }
