@@ -3,17 +3,16 @@ package kr.ontherec.authorization.member.application;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
+import kr.ontherec.authorization.infra.UnitTest;
 import kr.ontherec.authorization.member.domain.Member;
 import kr.ontherec.authorization.member.exception.MemberException;
 import kr.ontherec.authorization.member.exception.MemberExceptionCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
-@Transactional
+@UnitTest
 class MemberServiceTest {
 
     @Autowired
@@ -65,6 +64,25 @@ class MemberServiceTest {
         // then
         assertThat(memberService.getByUsername(newMember.getUsername()).getUsername())
                 .isEqualTo(newMember.getUsername());
+    }
+
+    @Test
+    @DisplayName("사용자 회원가입 실패 - 존재하는 ID")
+    void registerNewMemberWithExistUsername() {
+        // given
+        Member newMember = Member.builder()
+                .username("test")
+                .nickname("new-nickname")
+                .phoneNumber("010-1234-5678")
+                .build();
+
+        // when
+        Throwable throwable = catchThrowable(() -> memberService.register(newMember));
+
+        // then
+        assertThat(throwable)
+                .isInstanceOf(MemberException.class)
+                .hasMessage(MemberExceptionCode.EXIST_USERNAME.getMessage());
     }
 
     @Test
