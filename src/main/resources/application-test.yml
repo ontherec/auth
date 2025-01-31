@@ -1,0 +1,13 @@
+spring:
+
+  config:
+    import:
+      - classpath:application-secret.properties
+
+  datasource:
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:mysql:latest:///test
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
