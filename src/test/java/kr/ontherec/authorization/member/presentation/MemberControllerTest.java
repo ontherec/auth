@@ -6,24 +6,38 @@ import static kr.ontherec.authorization.member.exception.MemberExceptionCode.EXI
 import static kr.ontherec.authorization.member.exception.MemberExceptionCode.EXIST_USERNAME;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.springframework.restdocs.restassured.RestAssuredRestDocumentation.documentationConfiguration;
 
+import com.epages.restdocs.apispec.RestAssuredRestDocumentationWrapper;
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.specification.RequestSpecification;
 import kr.ontherec.authorization.infra.IntegrationTest;
 import kr.ontherec.authorization.member.dto.MemberSignUpRequestDto;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.restdocs.RestDocumentationContextProvider;
 
-class MemberControllerTest extends IntegrationTest {
+@IntegrationTest
+class MemberControllerTest {
 
-    @BeforeAll
-    static void setUpAll(@LocalServerPort int port) {
+    @LocalServerPort
+    private int port;
+
+    private RequestSpecification spec;
+
+    @BeforeEach
+    void setUp(RestDocumentationContextProvider restDocumentation) {
         RestAssured.baseURI = "http://localhost";
         RestAssured.basePath = "/v1";
         RestAssured.port = port;
+
+        this.spec = new RequestSpecBuilder().addFilter(documentationConfiguration(restDocumentation))
+                .build();
     }
 
     @Test
@@ -39,9 +53,11 @@ class MemberControllerTest extends IntegrationTest {
                 null
         );
 
-        given()
+        given(this.spec)
                 .contentType(ContentType.JSON)
                 .body(dto)
+                .filter(RestAssuredRestDocumentationWrapper.document("index")
+                )
         .when()
                 .post("/signup")
         .then()
@@ -123,5 +139,4 @@ class MemberControllerTest extends IntegrationTest {
                 .body("message", equalTo(EXIST_PHONE_NUMBER.getMessage()));
 
     }
-
 }
