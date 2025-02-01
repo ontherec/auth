@@ -22,6 +22,7 @@ public class DefaultSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .headers(hc -> hc.frameOptions(FrameOptionsConfig::sameOrigin)) // h2 console
                 .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/.well-known/openapi-specification").permitAll()
                         .requestMatchers("/v1/signup").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)
