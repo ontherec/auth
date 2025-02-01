@@ -37,9 +37,26 @@ public class DatabaseInitializer implements AfterEachCallback, BeforeEachCallbac
     @PersistenceContext
     private EntityManager em;
 
+    @Override
+    public void beforeEach(ExtensionContext context) {
+        DatabaseInitializer initializer = SpringExtension.getApplicationContext(context).getBean(DatabaseInitializer.class);
+        initializer.init();
+    }
+
+    @Override
+    public void afterEach(ExtensionContext context) {
+        DatabaseInitializer initializer = SpringExtension.getApplicationContext(context).getBean(DatabaseInitializer.class);
+        initializer.cleanup();
+    }
+
+    @Transactional
+    public void init() {
+        for(String query: INIT_SCRIPT_QUERIES)
+            em.createNativeQuery(query).executeUpdate();
+    }
+
     @Transactional
     public void cleanup() {
-        em.flush();
         em.createNativeQuery("SET FOREIGN_KEY_CHECKS = 0").executeUpdate();
 
         for(String tableName : extractTableNames())
@@ -54,23 +71,5 @@ public class DatabaseInitializer implements AfterEachCallback, BeforeEachCallbac
                 .filter(e -> e.getJavaType().getAnnotation(Entity.class) != null)
                 .map(e -> CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, e.getName()))
                 .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public void init() {
-        for(String query: INIT_SCRIPT_QUERIES)
-            em.createNativeQuery(query).executeUpdate();
-    }
-
-    @Override
-    public void afterEach(ExtensionContext context) {
-        DatabaseInitializer initializer = SpringExtension.getApplicationContext(context).getBean(DatabaseInitializer.class);
-        initializer.cleanup();
-    }
-
-    @Override
-    public void beforeEach(ExtensionContext context) {
-        DatabaseInitializer initializer = SpringExtension.getApplicationContext(context).getBean(DatabaseInitializer.class);
-        initializer.init();
     }
 }
