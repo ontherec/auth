@@ -14,42 +14,42 @@ jobs:
       cancel-in-progress: true
 
     steps:
-    - name: Set up Remote Environment
-      uses: appleboy/ssh-action@v1.2.0
-      with:
-        host: ${{ secrets.DEV_SERVER_HOST }}
-        username: ${{ secrets.DEV_SERVER_USERNAME }}
-        key: ${{ secrets.DEV_SERVER_KEY }}
-        script: |
-          touch db.env
-          {
-            echo MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
-            echo MYSQL_USER=${{ secrets.MYSQL_USER }}
-            echo MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
-            echo MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
-          } > db.env
-          touch auth.env
-          {
-            echo DATABASE_URL=jdbc:mysql://db:3306/${{ secrets.MYSQL_DATABASE }}
-            echo DATABASE_USERNAME=${{ secrets.MYSQL_USER }}
-            echo DATABASE_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
-            echo AUTHORIZATION_CLIENT_ID=${{ secrets.AUTHORIZATION_CLIENT_ID }}
-            echo AUTHORIZATION_REDIRECT_URI=${{ secrets.AUTHORIZATION_REDIRECT_URI }}
-            echo GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
-            echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
-            echo KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}
-            echo KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}
-            echo NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}
-            echo NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}
-          } > auth.env
+      - name: Set up Remote Environment
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEV_SERVER_HOST }}
+          username: ${{ secrets.DEV_SERVER_USERNAME }}
+          key: ${{ secrets.DEV_SERVER_KEY }}
+          script: |
+            touch db.env
+            {
+              echo MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
+              echo MYSQL_USER=${{ secrets.MYSQL_USER }}
+              echo MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+              echo MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
+            } > db.env
+            touch auth.env
+            {
+              echo DATABASE_URL=${{ secrets.DATABASE_URL }}
+              echo DATABASE_USERNAME=${{ secrets.MYSQL_USER }}
+              echo DATABASE_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+              echo AUTHORIZATION_CLIENT_ID=${{ secrets.AUTHORIZATION_CLIENT_ID }}
+              echo AUTHORIZATION_REDIRECT_URI=${{ secrets.AUTHORIZATION_REDIRECT_URI }}
+              echo GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+              echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
+              echo KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}
+              echo KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}
+              echo NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}
+              echo NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}
+            } > auth.env
 
-    - name: Down and Up Containers
-      uses: appleboy/ssh-action@v1.2.0
-      with:
-        host: ${{ secrets.DEV_SERVER_HOST }}
-        username: ${{ secrets.DEV_SERVER_USERNAME }}
-        key: ${{ secrets.DEV_SERVER_KEY }}
-        script: |
-          sudo docker compose pull
-          sudo docker compose down --rmi local
-          sudo docker compose up -d
+      - name: Down and Up Containers
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEV_SERVER_HOST }}
+          username: ${{ secrets.DEV_SERVER_USERNAME }}
+          key: ${{ secrets.DEV_SERVER_KEY }}
+          script: |
+            sudo docker compose pull
+            sudo docker compose down --rmi local
+            sudo docker compose up -d
