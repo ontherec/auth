@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/.well-known/openapi-specification")
 public class DocsController {
 
-	@GetMapping
+	@GetMapping(produces = "application/json")
 	public byte[] getOpenApiSpec() throws IOException {
         return Files.readAllBytes(Paths.get("src/main/resources/static/openapi3.json"));
 	}

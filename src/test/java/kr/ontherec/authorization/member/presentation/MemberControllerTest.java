@@ -1,44 +1,30 @@
 package kr.ontherec.authorization.member.presentation;
 
+import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static io.restassured.RestAssured.given;
 import static kr.ontherec.authorization.member.exception.MemberExceptionCode.EXIST_NICKNAME;
 import static kr.ontherec.authorization.member.exception.MemberExceptionCode.EXIST_PHONE_NUMBER;
 import static kr.ontherec.authorization.member.exception.MemberExceptionCode.EXIST_USERNAME;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.springframework.restdocs.restassured.RestAssuredRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.snippet.Attributes.key;
 
+import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.RestAssuredRestDocumentationWrapper;
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
+import com.epages.restdocs.apispec.Schema;
 import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
+import java.util.Arrays;
 import kr.ontherec.authorization.infra.IntegrationTest;
+import kr.ontherec.authorization.member.domain.Authority;
+import kr.ontherec.authorization.member.dto.MemberResponseDto;
 import kr.ontherec.authorization.member.dto.MemberSignUpRequestDto;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.payload.JsonFieldType;
 
-@IntegrationTest
-class MemberControllerTest {
-
-    @LocalServerPort
-    private int port;
-
-    private RequestSpecification spec;
-
-    @BeforeEach
-    void setUp(RestDocumentationContextProvider restDocumentation) {
-        RestAssured.baseURI = "http://localhost";
-        RestAssured.basePath = "/v1";
-        RestAssured.port = port;
-
-        this.spec = new RequestSpecBuilder().addFilter(documentationConfiguration(restDocumentation))
-                .build();
-    }
+class MemberControllerTest extends IntegrationTest {
 
     @Test
     @DisplayName("회원가입 성공")
@@ -49,15 +35,69 @@ class MemberControllerTest {
                 null,
                 "new",
                 "010-0000-0001",
-                null,
                 null
         );
 
-        given(this.spec)
+        given(getSpec())
                 .contentType(ContentType.JSON)
                 .body(dto)
-                .filter(RestAssuredRestDocumentationWrapper.document("index")
-                )
+                .filter(RestAssuredRestDocumentationWrapper.document(
+                "signup",
+                        resource(ResourceSnippetParameters.builder()
+                                .tag("member")
+                                .summary("signup")
+                                .description("회원가입")
+                                .requestSchema(Schema.schema(MemberSignUpRequestDto.class.getSimpleName()))
+                                .requestFields(
+                                        fieldWithPath("username")
+                                                .type(JsonFieldType.STRING)
+                                                .description("아이디"),
+                                        fieldWithPath("password")
+                                                .type(JsonFieldType.STRING)
+                                                .description("비밀번호")
+                                                .optional(),
+                                        fieldWithPath("name")
+                                                .type(JsonFieldType.STRING)
+                                                .description("이름")
+                                                .optional(),
+                                        fieldWithPath("nickname")
+                                                .type(JsonFieldType.STRING)
+                                                .description("닉네임"),
+                                        fieldWithPath("phoneNumber")
+                                                .type(JsonFieldType.STRING)
+                                                .description("전화번호"),
+                                        fieldWithPath("picture")
+                                                .type(JsonFieldType.STRING)
+                                                .description("프로필 사진")
+                                                .optional())
+                                .responseSchema(Schema.schema(MemberResponseDto.class.getSimpleName()))
+                                .responseFields(
+                                        fieldWithPath("id")
+                                                .type(JsonFieldType.NUMBER)
+                                                .description("식별자"),
+                                        fieldWithPath("username")
+                                                .type(JsonFieldType.STRING)
+                                                .description("아이디"),
+                                        fieldWithPath("name")
+                                                .type(JsonFieldType.STRING)
+                                                .description("이름")
+                                                .optional(),
+                                        fieldWithPath("nickname")
+                                                .type(JsonFieldType.STRING)
+                                                .description("닉네임"),
+                                        fieldWithPath("phoneNumber")
+                                                .type(JsonFieldType.STRING)
+                                                .description("전화번호"),
+                                        fieldWithPath("picture")
+                                                .type(JsonFieldType.STRING)
+                                                .description("프로필 사진 URL")
+                                                .optional(),
+                                        fieldWithPath("roles")
+                                                .type(JsonFieldType.ARRAY)
+                                                .description("권한 목록 " + Arrays.toString(Authority.values()))
+                                                .attributes(key("itemsType").value("ENUM"))
+                                                .optional())
+                                .build())))
         .when()
                 .post("/signup")
         .then()
@@ -77,7 +117,6 @@ class MemberControllerTest {
                 null,
                 "new",
                 "010-0000-0001",
-                null,
                 null
         );
 
@@ -101,7 +140,6 @@ class MemberControllerTest {
                 null,
                 "nickname",
                 "010-0000-0001",
-                null,
                 null
         );
 
@@ -125,7 +163,6 @@ class MemberControllerTest {
                 null,
                 "new",
                 "010-0000-0000",
-                null,
                 null
         );
 

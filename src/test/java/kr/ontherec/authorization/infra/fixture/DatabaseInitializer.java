@@ -10,7 +10,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.shaded.org.apache.commons.io.FileUtils;
 
 @Component
-public class DatabaseInitializer implements AfterEachCallback, BeforeEachCallback {
+public class DatabaseInitializer implements BeforeEachCallback {
 
     private static final String INIT_SCRIPT_PATH = "src/main/resources/data.sql";
     private static final String[] INIT_SCRIPT_QUERIES;
@@ -40,13 +39,8 @@ public class DatabaseInitializer implements AfterEachCallback, BeforeEachCallbac
     @Override
     public void beforeEach(ExtensionContext context) {
         DatabaseInitializer initializer = SpringExtension.getApplicationContext(context).getBean(DatabaseInitializer.class);
-        initializer.init();
-    }
-
-    @Override
-    public void afterEach(ExtensionContext context) {
-        DatabaseInitializer initializer = SpringExtension.getApplicationContext(context).getBean(DatabaseInitializer.class);
         initializer.cleanup();
+        initializer.init();
     }
 
     @Transactional

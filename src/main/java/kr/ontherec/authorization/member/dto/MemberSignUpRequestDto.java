@@ -3,8 +3,6 @@ package kr.ontherec.authorization.member.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import java.util.Set;
-import kr.ontherec.authorization.member.domain.Role;
 import org.hibernate.validator.constraints.URL;
 
 public record MemberSignUpRequestDto(
@@ -22,6 +20,5 @@ public record MemberSignUpRequestDto(
         @Pattern(regexp = "^[0-9]{3}-[0-9]{4}-[0-9]{4}$", message = "유효하지 않은 전화번호 입니다")
         String phoneNumber,
         @URL(message = "유효하지 않은 URL 입니다")
-        String picture,
-        Set<Role> roles
+        String picture
 ) {}

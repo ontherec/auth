@@ -75,12 +75,14 @@ tasks.named('test') {
 openapi3 {
 	server = 'https://accounts.ontherec.live'
 	title = 'On The Record Authorization Server'
-	description = 'API Documents'
+	description = '개발 서버에서 제공되는 On The Record 인증 서버 API 문서 입니다.'
 	version = '0.3.0'
 	format = 'json'
 }
 
-tasks.register('copySpec', Copy) {
+tasks.register('docs', Copy) {
+	dependsOn 'openapi3'
+	delete 'src/main/resources/static/openapi3.json'
 	from file("build/api-spec")
 	into file("src/main/resources/static")
 }
