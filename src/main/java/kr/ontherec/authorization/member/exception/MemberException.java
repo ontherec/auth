@@ -1,17 +1,12 @@
 package kr.ontherec.authorization.member.exception;
 
+import kr.ontherec.authorization.global.exception.CustomException;
 import lombok.Getter;
 
 @Getter
-public class MemberException extends RuntimeException {
-    private final MemberExceptionCode exceptionCode;
+public class MemberException extends CustomException {
 
     public MemberException(MemberExceptionCode exceptionCode) {
-        super(exceptionCode.getMessage());
-        this.exceptionCode = exceptionCode;
-    }
-
-    public int getHttpStatus() {
-        return exceptionCode.getStatus().value();
+        super(exceptionCode);
     }
 }

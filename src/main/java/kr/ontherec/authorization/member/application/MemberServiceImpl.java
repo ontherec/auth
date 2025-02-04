@@ -22,15 +22,16 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void register(Member member) {
-        if (!memberRepository.existsByUsername(member.getUsername())) {
-            if(memberRepository.existsByNickname(member.getNickname()))
-                throw new MemberException(MemberExceptionCode.EXIST_NICKNAME);
+    public Member register(Member member) {
+        if (memberRepository.existsByUsername(member.getUsername()))
+            throw new MemberException(MemberExceptionCode.EXIST_USERNAME);
 
-            if(memberRepository.existsByPhoneNumber(member.getPhoneNumber()))
-                throw new MemberException(MemberExceptionCode.EXIST_PHONE_NUMBER);
+        if(memberRepository.existsByNickname(member.getNickname()))
+            throw new MemberException(MemberExceptionCode.EXIST_NICKNAME);
 
-            memberRepository.save(member);
-        }
+        if(memberRepository.existsByPhoneNumber(member.getPhoneNumber()))
+            throw new MemberException(MemberExceptionCode.EXIST_PHONE_NUMBER);
+
+        return memberRepository.save(member);
     }
 }

@@ -1,11 +1,11 @@
-INSERT INTO members (id, username, password, name, nickname, phone_number)
+INSERT INTO member (id, username, password, name, nickname, phone_number)
 VALUES (1, 'test', '{noop}otrtest', 'name', 'nickname', '010-0000-0000');
 
-INSERT INTO roles (id, name, member_id)
+INSERT INTO role (id, authority, member_id)
 VALUES (1, 'GUEST', 1);
 
-INSERT INTO roles (id, name, member_id)
+INSERT INTO role (id, authority, member_id)
 VALUES (2, 'HOST', 1);
 
-INSERT INTO roles (id, name, member_id)
+INSERT INTO role (id, authority, member_id)
 VALUES (3, 'ADMIN', 1);
