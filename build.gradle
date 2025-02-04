@@ -86,3 +86,7 @@ tasks.register('docs', Copy) {
 	from file("build/api-spec")
 	into file("src/main/resources/static")
 }
+
+bootJar {
+	dependsOn 'docs'
+}

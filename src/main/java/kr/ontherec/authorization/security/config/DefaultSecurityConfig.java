@@ -24,7 +24,7 @@ public class DefaultSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(corsConfig -> corsConfig.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:63342", "http://localhost:3000"));
+                    config.setAllowedOrigins(List.of("http://localhost:3000", "https://localhost:3000", "http://docs.ontherec.live", "https://docs.ontherec.live"));
                     config.setAllowedMethods(Collections.singletonList("*"));
                     config.setAllowedHeaders(Collections.singletonList("*"));
                     config.setExposedHeaders(Collections.singletonList("Authorization"));
@@ -33,7 +33,7 @@ public class DefaultSecurityConfig {
                     return config;
                 }))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/.well-known/openapi-specification").permitAll()
+                        .requestMatchers("/static/**").permitAll()
                         .requestMatchers("/v1/signup").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)
