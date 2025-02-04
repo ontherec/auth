@@ -1,19 +1,35 @@
 server:
   port: 9000
+  forward-headers-strategy: native
 
 spring:
   application:
     name: authorization
+
   profiles:
     default: local
+
   config:
     import:
       - classpath:external/oauth2-registration.yml
+
   web:
     resources:
       add-mappings: false
+
   jpa:
     open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
 
 authorization-server:
   client-id: ${AUTHORIZATION_CLIENT_ID}
