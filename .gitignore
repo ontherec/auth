@@ -38,7 +38,7 @@ out/
 
 ### Secrets ###
 *.env
-*-secret.properties
+*.properties
 
 ### Docs ###
 openapi*.json

@@ -1,12 +1,3 @@
 spring:
-
-  config:
-    import:
-      - classpath:application-secret.properties
-
   datasource:
     url: jdbc:tc:mysql:latest:///test
-
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
