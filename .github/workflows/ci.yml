@@ -17,6 +17,7 @@ jobs:
 
     env:
       AUTHORIZATION_CLIENT_ID: ${{ secrets.AUTHORIZATION_CLIENT_ID }}
+      AUTHORIZATION_CLIENT_SECRET: ${{ secrets.AUTHORIZATION_CLIENT_SECRET }}
       AUTHORIZATION_REDIRECT_URI: ${{ secrets.AUTHORIZATION_REDIRECT_URI }}
       GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
       GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
@@ -49,9 +50,7 @@ jobs:
     - name: Build with Gradle Wrapper
       run: |
         chmod +x gradlew
-        ./gradlew docs --info
-        sudo ls src/main/resources/static
-        ./gradlew bootJar --info
+        ./gradlew docs && ./gradlew bootJar
 
     - name: Login to Docker Hub
       uses: docker/login-action@v3

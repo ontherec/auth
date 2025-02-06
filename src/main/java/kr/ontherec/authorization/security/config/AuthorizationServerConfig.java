@@ -44,6 +44,9 @@ public class AuthorizationServerConfig {
     @Value("${authorization-server.client-id}")
     private String CLIENT_ID;
 
+    @Value("${authorization-server.client-secret}")
+    private String CLIENT_SECRET;
+
     @Value("${authorization-server.redirect-uri}")
     private String REDIRECT_URI;
 
@@ -71,6 +74,7 @@ public class AuthorizationServerConfig {
         // PKCE
         RegisteredClient pkceClient = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId(CLIENT_ID)
+                .clientSecret(CLIENT_SECRET)
                 .clientAuthenticationMethod(ClientAuthenticationMethod.NONE)
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
