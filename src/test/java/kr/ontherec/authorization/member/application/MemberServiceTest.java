@@ -54,12 +54,12 @@ class MemberServiceTest {
         // given
         Member newMember = Member.builder()
                 .username("new")
-                .nickname("new-nickname")
-                .phoneNumber("010-1234-5678")
+                .nickname("new")
+                .phoneNumber("010-0000-0001")
                 .build();
 
         // when
-        memberService.register(newMember);
+        memberService.signUp(newMember);
 
         // then
         assertThat(memberService.getByUsername(newMember.getUsername()).getUsername())
@@ -72,12 +72,12 @@ class MemberServiceTest {
         // given
         Member newMember = Member.builder()
                 .username("test")
-                .nickname("new-nickname")
-                .phoneNumber("010-1234-5678")
+                .nickname("new")
+                .phoneNumber("010-0000-0001")
                 .build();
 
         // when
-        Throwable throwable = catchThrowable(() -> memberService.register(newMember));
+        Throwable throwable = catchThrowable(() -> memberService.signUp(newMember));
 
         // then
         assertThat(throwable)
@@ -91,12 +91,12 @@ class MemberServiceTest {
         // given
         Member newMember = Member.builder()
                 .username("new")
-                .nickname("nickname")
-                .phoneNumber("010-1234-5678")
+                .nickname("test")
+                .phoneNumber("010-0000-0001")
                 .build();
 
         // when
-        Throwable throwable = catchThrowable(() -> memberService.register(newMember));
+        Throwable throwable = catchThrowable(() -> memberService.signUp(newMember));
 
         // then
         assertThat(throwable)
@@ -110,12 +110,12 @@ class MemberServiceTest {
         // given
         Member newMember = Member.builder()
                 .username("new")
-                .nickname("new-nickname")
+                .nickname("new")
                 .phoneNumber("010-0000-0000")
                 .build();
 
         // when
-        Throwable throwable = catchThrowable(() -> memberService.register(newMember));
+        Throwable throwable = catchThrowable(() -> memberService.signUp(newMember));
 
         // then
         assertThat(throwable)

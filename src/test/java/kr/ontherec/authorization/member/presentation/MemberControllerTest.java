@@ -6,18 +6,14 @@ import static kr.ontherec.authorization.member.exception.MemberExceptionCode.EXI
 import static kr.ontherec.authorization.member.exception.MemberExceptionCode.EXIST_PHONE_NUMBER;
 import static kr.ontherec.authorization.member.exception.MemberExceptionCode.EXIST_USERNAME;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.startsWith;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.snippet.Attributes.key;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.RestAssuredRestDocumentationWrapper;
 import com.epages.restdocs.apispec.Schema;
 import io.restassured.http.ContentType;
-import java.util.Arrays;
 import kr.ontherec.authorization.infra.IntegrationTest;
-import kr.ontherec.authorization.member.domain.Authority;
-import kr.ontherec.authorization.member.dto.MemberResponseDto;
 import kr.ontherec.authorization.member.dto.MemberSignUpRequestDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +23,7 @@ import org.springframework.restdocs.payload.JsonFieldType;
 class MemberControllerTest extends IntegrationTest {
 
     @Test
-    @DisplayName("회원가입 성공")
+    @DisplayName("사용자 회원가입 성공")
     void signUp() {
         MemberSignUpRequestDto dto = new MemberSignUpRequestDto(
                 "new",
@@ -70,41 +66,12 @@ class MemberControllerTest extends IntegrationTest {
                                                 .type(JsonFieldType.STRING)
                                                 .description("프로필 사진")
                                                 .optional())
-                                .responseSchema(Schema.schema(MemberResponseDto.class.getSimpleName()))
-                                .responseFields(
-                                        fieldWithPath("id")
-                                                .type(JsonFieldType.NUMBER)
-                                                .description("식별자"),
-                                        fieldWithPath("username")
-                                                .type(JsonFieldType.STRING)
-                                                .description("아이디"),
-                                        fieldWithPath("name")
-                                                .type(JsonFieldType.STRING)
-                                                .description("이름")
-                                                .optional(),
-                                        fieldWithPath("nickname")
-                                                .type(JsonFieldType.STRING)
-                                                .description("닉네임"),
-                                        fieldWithPath("phoneNumber")
-                                                .type(JsonFieldType.STRING)
-                                                .description("전화번호"),
-                                        fieldWithPath("picture")
-                                                .type(JsonFieldType.STRING)
-                                                .description("프로필 사진 URL")
-                                                .optional(),
-                                        fieldWithPath("roles")
-                                                .type(JsonFieldType.ARRAY)
-                                                .description("권한 목록 " + Arrays.toString(Authority.values()))
-                                                .attributes(key("itemsType").value("ENUM"))
-                                                .optional())
                                 .build())))
         .when()
-                .post("/signup")
+                .post("/members")
         .then()
                 .statusCode(HttpStatus.CREATED.value())
-                .header("Location", "/v1/me")
-                .body("id", notNullValue())
-                .body("username", equalTo(dto.username()));
+                .header("Location", startsWith("/v1/members"));
 
     }
 
@@ -123,9 +90,9 @@ class MemberControllerTest extends IntegrationTest {
         given()
                 .contentType(ContentType.JSON)
                 .body(dto)
-                .when()
-                .post("/signup")
-                .then()
+        .when()
+                .post("/members")
+        .then()
                 .statusCode(EXIST_USERNAME.getStatus().value())
                 .body("message", equalTo(EXIST_USERNAME.getMessage()));
 
@@ -138,7 +105,7 @@ class MemberControllerTest extends IntegrationTest {
                 "new",
                 "password",
                 null,
-                "nickname",
+                "test",
                 "010-0000-0001",
                 null
         );
@@ -146,9 +113,9 @@ class MemberControllerTest extends IntegrationTest {
         given()
                 .contentType(ContentType.JSON)
                 .body(dto)
-                .when()
-                .post("/signup")
-                .then()
+        .when()
+                .post("/members")
+        .then()
                 .statusCode(EXIST_NICKNAME.getStatus().value())
                 .body("message", equalTo(EXIST_NICKNAME.getMessage()));
 
@@ -169,9 +136,9 @@ class MemberControllerTest extends IntegrationTest {
         given()
                 .contentType(ContentType.JSON)
                 .body(dto)
-                .when()
-                .post("/signup")
-                .then()
+        .when()
+                .post("/members")
+        .then()
                 .statusCode(EXIST_PHONE_NUMBER.getStatus().value())
                 .body("message", equalTo(EXIST_PHONE_NUMBER.getMessage()));
 

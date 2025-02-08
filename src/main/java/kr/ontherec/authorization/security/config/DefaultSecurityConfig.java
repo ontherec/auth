@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.password.CompromisedPasswordChecker;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,7 +25,7 @@ public class DefaultSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(corsConfig -> corsConfig.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:3000", "https://localhost:3000", "http://docs.ontherec.live", "https://docs.ontherec.live"));
+                    config.setAllowedOrigins(List.of("http://localhost:3000", "https://localhost:3000", "http://docs.ontherec.live", "https://docs.ontherec.live"));  // TODO: 배포시 수정
                     config.setAllowedMethods(Collections.singletonList("*"));
                     config.setAllowedHeaders(Collections.singletonList("*"));
                     config.setExposedHeaders(Collections.singletonList("Authorization"));
@@ -34,7 +35,7 @@ public class DefaultSecurityConfig {
                 }))
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/static/**").permitAll()
-                        .requestMatchers("/v1/signup").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/v1/members").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(Customizer.withDefaults())

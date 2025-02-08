@@ -4,5 +4,5 @@ import kr.ontherec.authorization.member.domain.Member;
 
 public interface MemberService {
     Member getByUsername(String username);
-    Member register(Member member);
+    Long signUp(Member member);
 }
