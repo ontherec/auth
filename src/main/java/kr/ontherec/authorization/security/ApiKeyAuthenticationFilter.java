@@ -29,7 +29,7 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String credentials = request.getHeader(API_KEY_HEADER);
 
-        if (credentials.equals(apiKey)) {
+        if (credentials != null && credentials.equals(apiKey)) {
             Collection<GrantedAuthority> authorities = Stream.of("GUEST", "HOST", "ADMIN")
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());

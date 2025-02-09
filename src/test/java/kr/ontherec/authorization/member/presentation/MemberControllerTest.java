@@ -19,10 +19,14 @@ import kr.ontherec.authorization.member.dto.MemberSignUpRequestDto;
 import kr.ontherec.authorization.member.dto.MemberUpdateRequestDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.restdocs.payload.JsonFieldType;
 
 class MemberControllerTest extends IntegrationTest {
+
+    @Value("${authorization-server.api-key}")
+    private String API_KEY;
 
     @Test
     @DisplayName("사용자 회원가입 성공")
@@ -155,7 +159,7 @@ class MemberControllerTest extends IntegrationTest {
         );
 
         given(getSpec())
-                .auth().form("test","otrtest")
+                .header("X-API-KEY", API_KEY)
                 .contentType(ContentType.JSON)
                 .body(dto)
                 .filter(RestAssuredRestDocumentationWrapper.document(
@@ -205,7 +209,7 @@ class MemberControllerTest extends IntegrationTest {
         );
 
         given()
-                .auth().form("test","otrtest")
+                .header("X-API-KEY", API_KEY)
                 .contentType(ContentType.JSON)
                 .body(dto)
         .when()
@@ -227,7 +231,7 @@ class MemberControllerTest extends IntegrationTest {
         );
 
         given()
-                .auth().form("test","otrtest")
+                .header("X-API-KEY", API_KEY)
                 .contentType(ContentType.JSON)
                 .body(dto)
         .when()
@@ -241,7 +245,7 @@ class MemberControllerTest extends IntegrationTest {
     @DisplayName("회원탈퇴 성공")
     void withdraw() {
         given(getSpec())
-                .auth().form("test","otrtest")
+                .header("X-API-KEY", API_KEY)
                 .contentType(ContentType.JSON)
                 .filter(RestAssuredRestDocumentationWrapper.document(
                         "withdraw",
