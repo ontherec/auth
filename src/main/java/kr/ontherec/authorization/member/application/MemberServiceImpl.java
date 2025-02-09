@@ -1,7 +1,9 @@
 package kr.ontherec.authorization.member.application;
 
+import kr.ontherec.authorization.member.application.mapper.MemberMapper;
 import kr.ontherec.authorization.member.dao.MemberRepository;
 import kr.ontherec.authorization.member.domain.Member;
+import kr.ontherec.authorization.member.dto.MemberUpdateRequestDto;
 import kr.ontherec.authorization.member.exception.MemberException;
 import kr.ontherec.authorization.member.exception.MemberExceptionCode;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class MemberServiceImpl implements MemberService {
-
     private final MemberRepository memberRepository;
+    private final MemberMapper mapper = MemberMapper.INSTANCE;
 
     @Override
     @Transactional(readOnly = true)
@@ -33,5 +35,23 @@ public class MemberServiceImpl implements MemberService {
             throw new MemberException(MemberExceptionCode.EXIST_PHONE_NUMBER);
 
         return memberRepository.save(member).getId();
+    }
+
+    @Override
+    public void update(String username, MemberUpdateRequestDto dto) {
+        if(dto.nickname() != null && memberRepository.existsByNickname(dto.nickname()))
+            throw new MemberException(MemberExceptionCode.EXIST_NICKNAME);
+
+        if(dto.phoneNumber() != null && memberRepository.existsByPhoneNumber(dto.phoneNumber()))
+            throw new MemberException(MemberExceptionCode.EXIST_PHONE_NUMBER);
+
+        Member foundMember = memberRepository.findByUsernameOrThrow(username);
+        mapper.update(dto, foundMember);
+        memberRepository.save(foundMember);
+    }
+
+    @Override
+    public void withdraw(String username) {
+        memberRepository.deleteByUsername(username);
     }
 }

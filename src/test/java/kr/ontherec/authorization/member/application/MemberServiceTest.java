@@ -67,7 +67,7 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("사용자 회원가입 실패 - 존재하는 ID")
+    @DisplayName("회원가입 실패 - 존재하는 ID")
     void registerNewMemberWithExistUsername() {
         // given
         Member newMember = Member.builder()
@@ -86,7 +86,7 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("사용자 회원가입 실패 - 닉네임 중복")
+    @DisplayName("회원가입 실패 - 닉네임 중복")
     void registerNewMemberWithDuplicatedNickname() {
         // given
         Member newMember = Member.builder()
@@ -105,7 +105,7 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("사용자 회원가입 실패 - 전화번호 중복")
+    @DisplayName("회원가입 실패 - 전화번호 중복")
     void registerNewMemberWithDuplicatedPhoneNumber() {
         // given
         Member newMember = Member.builder()

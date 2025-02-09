@@ -25,7 +25,11 @@ public class DefaultSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(corsConfig -> corsConfig.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:3000", "https://localhost:3000", "http://docs.ontherec.live", "https://docs.ontherec.live"));  // TODO: 배포시 수정
+                    config.setAllowedOrigins(List.of(
+                            "http://localhost:3000",
+                            "https://localhost:3000",
+                            "http://docs.ontherec.live",
+                            "https://docs.ontherec.live"));  // TODO: 배포시 수정
                     config.setAllowedMethods(Collections.singletonList("*"));
                     config.setAllowedHeaders(Collections.singletonList("*"));
                     config.setExposedHeaders(Collections.singletonList("Authorization"));
@@ -39,7 +43,8 @@ public class DefaultSecurityConfig {
                         .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(Customizer.withDefaults())
-                .oauth2Login(olc -> olc.successHandler(authenticationSuccessHandler));
+                .oauth2Login(olc -> olc.successHandler(authenticationSuccessHandler))
+                .oauth2ResourceServer(orc -> orc.jwt(Customizer.withDefaults()));
 
         return http.build();
     }

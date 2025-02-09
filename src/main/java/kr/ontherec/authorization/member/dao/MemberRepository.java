@@ -18,8 +18,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findByUsername(String username);
 
-    default Member findByUsernameOrThrow(final String username) {
-        return findByUsername(username)
-                .orElseThrow(() -> new MemberException(MemberExceptionCode.NOT_FOUND));
+    default Member findByUsernameOrThrow(String username) {
+        return findByUsername(username).orElseThrow(() -> new MemberException(MemberExceptionCode.NOT_FOUND));
     }
+
+    void deleteByUsername(String username);
 }

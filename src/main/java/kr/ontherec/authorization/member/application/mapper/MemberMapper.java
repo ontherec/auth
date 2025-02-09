@@ -7,6 +7,7 @@ import kr.ontherec.authorization.member.domain.Member;
 import kr.ontherec.authorization.member.domain.Role;
 import kr.ontherec.authorization.member.dto.MemberResponseDto;
 import kr.ontherec.authorization.member.dto.MemberSignUpRequestDto;
+import kr.ontherec.authorization.member.dto.MemberUpdateRequestDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -28,7 +29,8 @@ public interface MemberMapper {
         return roles.stream().map(Role::getAuthority).collect(Collectors.toSet());
     }
 
-	@Mapping(source = "id", target = "id", ignore = true)
-	@Mapping(source = "username", target = "username", ignore = true)
-    void update(Member source, @MappingTarget Member target);
+	@Mapping(target = "id", ignore = true)
+	@Mapping(target = "username", ignore = true)
+    @Mapping(target = "roles", ignore = true)
+    void update(MemberUpdateRequestDto dto, @MappingTarget Member target);
 }
