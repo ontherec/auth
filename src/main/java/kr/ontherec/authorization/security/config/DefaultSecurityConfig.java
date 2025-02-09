@@ -13,6 +13,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.password.HaveIBeenPwnedRestApiPasswordChecker;
 import org.springframework.web.cors.CorsConfiguration;
 
@@ -23,7 +24,7 @@ public class DefaultSecurityConfig {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, AuthenticationSuccessHandler authenticationSuccessHandler) throws Exception {
 
         http.csrf(AbstractHttpConfigurer::disable)
-                .cors(corsConfig -> corsConfig.configurationSource(request -> {
+                .cors(cc -> cc.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
                     config.setAllowedOrigins(List.of(
                             "http://localhost:3000",
@@ -37,14 +38,16 @@ public class DefaultSecurityConfig {
                     config.setMaxAge(3600L);
                     return config;
                 }))
-                .authorizeHttpRequests((authorize) -> authorize
+                .authorizeHttpRequests(arc -> arc
                         .requestMatchers("/static/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/members").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(Customizer.withDefaults())
                 .oauth2Login(olc -> olc.successHandler(authenticationSuccessHandler))
-                .oauth2ResourceServer(orc -> orc.jwt(Customizer.withDefaults()));
+                .oauth2ResourceServer(orc -> orc
+                        .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
+                        .jwt(Customizer.withDefaults()));
 
         return http.build();
     }
