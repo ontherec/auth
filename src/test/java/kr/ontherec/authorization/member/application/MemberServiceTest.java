@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 import kr.ontherec.authorization.infra.UnitTest;
 import kr.ontherec.authorization.member.domain.Member;
+import kr.ontherec.authorization.member.dto.MemberUpdateRequestDto;
 import kr.ontherec.authorization.member.exception.MemberException;
 import kr.ontherec.authorization.member.exception.MemberExceptionCode;
 import org.junit.jupiter.api.DisplayName;
@@ -54,12 +55,12 @@ class MemberServiceTest {
         // given
         Member newMember = Member.builder()
                 .username("new")
-                .nickname("new-nickname")
-                .phoneNumber("010-1234-5678")
+                .nickname("new")
+                .phoneNumber("010-0000-0001")
                 .build();
 
         // when
-        memberService.register(newMember);
+        memberService.signUp(newMember);
 
         // then
         assertThat(memberService.getByUsername(newMember.getUsername()).getUsername())
@@ -67,17 +68,17 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("사용자 회원가입 실패 - 존재하는 ID")
+    @DisplayName("회원가입 실패 - 중복된 ID")
     void registerNewMemberWithExistUsername() {
         // given
         Member newMember = Member.builder()
                 .username("test")
-                .nickname("new-nickname")
-                .phoneNumber("010-1234-5678")
+                .nickname("new")
+                .phoneNumber("010-0000-0001")
                 .build();
 
         // when
-        Throwable throwable = catchThrowable(() -> memberService.register(newMember));
+        Throwable throwable = catchThrowable(() -> memberService.signUp(newMember));
 
         // then
         assertThat(throwable)
@@ -86,17 +87,17 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("사용자 회원가입 실패 - 닉네임 중복")
+    @DisplayName("회원가입 실패 - 중복된 닉네임")
     void registerNewMemberWithDuplicatedNickname() {
         // given
         Member newMember = Member.builder()
                 .username("new")
-                .nickname("nickname")
-                .phoneNumber("010-1234-5678")
+                .nickname("test")
+                .phoneNumber("010-0000-0001")
                 .build();
 
         // when
-        Throwable throwable = catchThrowable(() -> memberService.register(newMember));
+        Throwable throwable = catchThrowable(() -> memberService.signUp(newMember));
 
         // then
         assertThat(throwable)
@@ -105,17 +106,85 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("사용자 회원가입 실패 - 전화번호 중복")
+    @DisplayName("회원가입 실패 - 중복된 전화번호")
     void registerNewMemberWithDuplicatedPhoneNumber() {
         // given
         Member newMember = Member.builder()
                 .username("new")
-                .nickname("new-nickname")
+                .nickname("new")
                 .phoneNumber("010-0000-0000")
                 .build();
 
         // when
-        Throwable throwable = catchThrowable(() -> memberService.register(newMember));
+        Throwable throwable = catchThrowable(() -> memberService.signUp(newMember));
+
+        // then
+        assertThat(throwable)
+                .isInstanceOf(MemberException.class)
+                .hasMessage(MemberExceptionCode.EXIST_PHONE_NUMBER.getMessage());
+    }
+
+    @Test
+    @DisplayName("내 정보 수정 성공")
+    void update() {
+        // given
+        MemberUpdateRequestDto dto = new MemberUpdateRequestDto(
+                "password",
+                "new",
+                "new",
+                "010-0000-0001",
+                null
+        );
+        String username = "test";
+
+        // when
+        memberService.update(username, dto);
+        Member foundMember = memberService.getByUsername(username);
+
+        // then
+        assertThat(foundMember.getName()).isEqualTo(dto.name());
+        assertThat(foundMember.getNickname()).isEqualTo(dto.nickname());
+        assertThat(foundMember.getPhoneNumber()).isEqualTo(dto.phoneNumber());
+        assertThat(foundMember.getPicture()).isEqualTo(dto.picture());
+    }
+
+    @Test
+    @DisplayName("내 정보 수정 실패 - 중복된 닉네임")
+    void updateWithDuplicatedNickname() {
+        // given
+        MemberUpdateRequestDto dto = new MemberUpdateRequestDto(
+                "password",
+                "new",
+                "test",
+                "010-0000-0001",
+                null
+        );
+        String username = "test";
+
+        // when
+        Throwable throwable = catchThrowable(() -> memberService.update(username, dto));
+
+        // then
+        assertThat(throwable)
+                .isInstanceOf(MemberException.class)
+                .hasMessage(MemberExceptionCode.EXIST_NICKNAME.getMessage());
+    }
+
+    @Test
+    @DisplayName("내 정보 수정 실패 - 중복된 전화번호")
+    void updateWithDuplicatedPhoneNumber() {
+        // given
+        MemberUpdateRequestDto dto = new MemberUpdateRequestDto(
+                "password",
+                "new",
+                "new",
+                "010-0000-0000",
+                null
+        );
+        String username = "test";
+
+        // when
+        Throwable throwable = catchThrowable(() -> memberService.update(username, dto));
 
         // then
         assertThat(throwable)

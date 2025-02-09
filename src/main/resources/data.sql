@@ -1,5 +1,5 @@
 INSERT INTO member (id, username, password, name, nickname, phone_number)
-VALUES (1, 'test', '{noop}otrtest', 'name', 'nickname', '010-0000-0000');
+VALUES (1, 'test', '{noop}otrtest', 'test', 'test', '010-0000-0000');
 
 INSERT INTO role (id, authority, member_id)
 VALUES (1, 'GUEST', 1);

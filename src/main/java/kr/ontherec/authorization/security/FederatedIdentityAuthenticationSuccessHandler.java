@@ -6,9 +6,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import kr.ontherec.authorization.security.strategy.ClientRegistrationStrategy;
 import kr.ontherec.authorization.member.application.MemberService;
 import kr.ontherec.authorization.member.domain.Member;
+import kr.ontherec.authorization.security.strategy.ClientRegistrationStrategy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -42,7 +42,7 @@ public class FederatedIdentityAuthenticationSuccessHandler implements Authentica
 			for (ClientRegistrationStrategy strategy : strategies) {
 				if (strategy.isSupport(clientRegistrationId)) {
 					Member newMember = strategy.parseClaimsToMember(claims);
-					memberService.register(newMember);
+					memberService.signUp(newMember);
 				}
 			}
 		}

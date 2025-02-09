@@ -11,7 +11,7 @@ spring:
 
   config:
     import:
-      - classpath:external/oauth2-registration.yml
+      - classpath:oauth2.yml
 
   web:
     resources:

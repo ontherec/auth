@@ -1,8 +1,13 @@
 package kr.ontherec.authorization.member.application.mapper;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+import kr.ontherec.authorization.member.domain.Authority;
 import kr.ontherec.authorization.member.domain.Member;
+import kr.ontherec.authorization.member.domain.Role;
 import kr.ontherec.authorization.member.dto.MemberResponseDto;
 import kr.ontherec.authorization.member.dto.MemberSignUpRequestDto;
+import kr.ontherec.authorization.member.dto.MemberUpdateRequestDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -17,9 +22,15 @@ public interface MemberMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "roles", ignore = true)
     Member signUpRequestDtoToEntity(MemberSignUpRequestDto dto);
+
     MemberResponseDto entityToResponseDto(Member entity);
 
-	@Mapping(source = "id", target = "id", ignore = true)
-	@Mapping(source = "username", target = "username", ignore = true)
-    void update(Member source, @MappingTarget Member target);
+    default Set<Authority> rolesToAuthorities(Set<Role> roles) {
+        return roles.stream().map(Role::getAuthority).collect(Collectors.toSet());
+    }
+
+	@Mapping(target = "id", ignore = true)
+	@Mapping(target = "username", ignore = true)
+    @Mapping(target = "roles", ignore = true)
+    void update(MemberUpdateRequestDto dto, @MappingTarget Member target);
 }
