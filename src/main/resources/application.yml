@@ -32,5 +32,6 @@ spring:
       mode: always
 
 authorization-server:
+  api-key: ${AUTHORIZATION_API_KEY}
   client-id: ${AUTHORIZATION_CLIENT_ID}
   redirect-uri: ${AUTHORIZATION_REDIRECT_URI}
