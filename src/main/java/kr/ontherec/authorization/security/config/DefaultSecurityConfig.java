@@ -2,6 +2,8 @@ package kr.ontherec.authorization.security.config;
 
 import java.util.Collections;
 import java.util.List;
+import kr.ontherec.authorization.security.ApiKeyAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,11 +16,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.password.HaveIBeenPwnedRestApiPasswordChecker;
 import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration(proxyBeanMethods = false)
 public class DefaultSecurityConfig {
+
+    @Value("${authorization-server.api-key}")
+    private String API_KEY;
 
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, AuthenticationSuccessHandler authenticationSuccessHandler) throws Exception {
@@ -42,6 +48,7 @@ public class DefaultSecurityConfig {
                         .requestMatchers("/static/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/members").permitAll()
                         .anyRequest().authenticated())
+                .addFilterBefore(new ApiKeyAuthenticationFilter(API_KEY), UsernamePasswordAuthenticationFilter.class)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(Customizer.withDefaults())
                 .oauth2Login(olc -> olc.successHandler(authenticationSuccessHandler))
