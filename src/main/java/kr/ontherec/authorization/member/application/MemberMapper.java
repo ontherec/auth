@@ -1,7 +1,8 @@
-package kr.ontherec.authorization.member.application.mapper;
+package kr.ontherec.authorization.member.application;
 
 import java.util.Set;
 import java.util.stream.Collectors;
+import kr.ontherec.authorization.global.config.MapperConfig;
 import kr.ontherec.authorization.member.domain.Authority;
 import kr.ontherec.authorization.member.domain.Member;
 import kr.ontherec.authorization.member.domain.Role;

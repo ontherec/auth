@@ -1,6 +1,5 @@
 package kr.ontherec.authorization.member.application;
 
-import kr.ontherec.authorization.member.application.mapper.MemberMapper;
 import kr.ontherec.authorization.member.dao.MemberRepository;
 import kr.ontherec.authorization.member.domain.Member;
 import kr.ontherec.authorization.member.dto.MemberUpdateRequestDto;

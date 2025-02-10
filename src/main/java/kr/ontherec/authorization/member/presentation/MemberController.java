@@ -3,7 +3,7 @@ package kr.ontherec.authorization.member.presentation;
 import jakarta.validation.Valid;
 import java.net.URI;
 import kr.ontherec.authorization.member.application.MemberService;
-import kr.ontherec.authorization.member.application.mapper.MemberMapper;
+import kr.ontherec.authorization.member.application.MemberMapper;
 import kr.ontherec.authorization.member.domain.Member;
 import kr.ontherec.authorization.member.dto.MemberSignUpRequestDto;
 import kr.ontherec.authorization.member.dto.MemberUpdateRequestDto;
