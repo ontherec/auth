@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 import java.util.function.Function;
 import kr.ontherec.authorization.member.application.MemberService;
-import kr.ontherec.authorization.member.application.mapper.MemberMapper;
+import kr.ontherec.authorization.member.application.MemberMapper;
 import kr.ontherec.authorization.member.domain.Member;
 import kr.ontherec.authorization.member.dto.MemberResponseDto;
 import lombok.RequiredArgsConstructor;
