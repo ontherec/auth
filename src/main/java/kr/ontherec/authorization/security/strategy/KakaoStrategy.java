@@ -51,9 +51,9 @@ public class KakaoStrategy implements ClientRegistrationStrategy {
 
         private Member toMember() {
             return Member.builder()
-                    .username(this.id())
-                    .nickname(this.properties().nickname())
-                    .picture(this.properties().profile_image())
+                    .username(CLIENT_REGISTRATION_ID + "-" + id())
+                    .nickname(CLIENT_REGISTRATION_ID + "-" + id())
+                    .picture(properties().profile_image())
                     .build();
         }
     }
