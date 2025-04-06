@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.password.CompromisedPasswordChecker;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -54,16 +53,18 @@ public class DefaultSecurityConfig {
                 }))
                 .authorizeHttpRequests(arc -> arc
                         .requestMatchers("/static/**").permitAll()
+                        .requestMatchers("/login/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/members").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(new ApiKeyAuthenticationFilter(API_KEY), UsernamePasswordAuthenticationFilter.class)
                 .httpBasic(AbstractHttpConfigurer::disable)
-                .formLogin(Customizer.withDefaults())
-                .oauth2Login(olc -> olc.successHandler(authenticationSuccessHandler))
+                .formLogin(flc -> flc.loginPage("/login"))
+                .oauth2Login(olc -> olc
+                        .loginPage("/login")
+                        .successHandler(authenticationSuccessHandler))
                 .oauth2ResourceServer(orc -> orc
                         .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
                         .jwt(jc -> jc.jwtAuthenticationConverter(jwtAuthenticationConverter)));
-
         return http.build();
     }
 

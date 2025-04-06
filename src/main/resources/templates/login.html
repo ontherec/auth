@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html
+  lang="ko"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="https://www.thymeleaf.org"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="온더레코드 공식 메타사이트" />
+    <title>On The Record</title>
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="/static/assets/img/logo.png"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="/static/assets/css/style.css" />
+  </head>
+
+  <body class="flex justify-center items-center w-full h-screen bg-orange-50">
+    <!-- 양식 -->
+    <form
+      class="w-[720px] rounded-[10px] bg-white drop-shadow-[0px_4px_20px_rgba(0,0,0,0.1)] p-15 text-center relative"
+      method="post"
+      th:action="@{/login}"
+    >
+      <!-- 뒤로가기 버튼 -->
+      <a
+        class="absolute top-6 right-6 hover:cursor-pointer"
+        href="https://ontherec.kr"
+      >
+        <img
+          src="/static/assets/img/x.svg"
+          th:src="@{/static/assets/img/x.svg}"
+        />
+      </a>
+      <!-- 헤더 -->
+      <div class="space-y-[14px]">
+        <h1 class="font-semibold text-4xl text-neutral-900">로그인하기</h1>
+        <p class="text-lg text-neutral-500">
+          더 많은 서비스를 이용하려면 로그인이 필요합니다
+        </p>
+      </div>
+
+      <!-- 실패 / 성공 문구 -->
+      <div class="mb-2 hidden">
+        <div th:if="${param.error}" class="text-red-500">로그인 실패!</div>
+        <div th:if="${param.logout}" class="text-green-500">
+          로그아웃 되었습니다.
+        </div>
+      </div>
+
+      <!-- 구분선 -->
+      <div class="w-[600px] h-[1px] bg-neutral-200 mt-10 mb-[54px]"></div>
+
+      <!-- 디버그용 로그인 폼 -->
+      <div class="space-y-3 hidden">
+        <!-- Username -->
+        <div class="flex gap-2">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="border rounded"
+            required
+            autofocus
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="flex gap-2">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="border rounded"
+            required
+          />
+        </div>
+        <button
+          class="bg-orange-400 px-3 py-2 rounded hover:bg-orange-400/70 transition-colors duration-300 hover:cursor-pointer text-white"
+          type="submit"
+        >
+          Sign in
+        </button>
+      </div>
+
+      <!-- 로그인 버튼 -->
+      <div class="flex flex-col items-center font-medium text-lg gap-y-6">
+        <!-- 구글 -->
+        <a
+          class="login-button bg-white"
+          href="/oauth2/authorization/google"
+          role="link"
+        >
+          <img
+            src="/static/assets/img/Google Logo.svg"
+            th:src="@{/static/assets/img/Google Logo.svg}"
+            class="ps-1"
+            alt="Google로 시작하기"
+          />
+          <div class="flex-1 text-[#191919]">Google로 시작하기</div>
+        </a>
+
+        <!-- 네이버 -->
+        <a
+          class="login-button"
+          href="/oauth2/authorization/naver"
+          role="link"
+          style="background-color: #03c75a"
+        >
+          <img
+            src="/static/assets/img/Naver Logo.png"
+            th:src="@{/static/assets/img/Naver Logo.png}"
+            class="w-9 h-9"
+            alt="네이버로 시작하기"
+          />
+          <div class="flex-1 text-white">네이버로 시작하기</div>
+        </a>
+
+        <!-- 카카오 -->
+        <a
+          class="login-button"
+          href="/oauth2/authorization/kakao"
+          role="link"
+          style="background-color: #fee500"
+        >
+          <img
+            src="/static/assets/img/Kakao Logo.svg"
+            th:src="@{/static/assets/img/Kakao Logo.svg}"
+            class="ps-1"
+            alt="카카오로 시작하기"
+          />
+          <div class="flex-1 text-[#191919]">카카오로 시작하기</div>
+        </a>
+      </div>
+    </form>
+  </body>
+</html>
