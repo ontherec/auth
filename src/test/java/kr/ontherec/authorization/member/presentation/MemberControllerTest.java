@@ -5,9 +5,7 @@ import static io.restassured.RestAssured.given;
 import static kr.ontherec.authorization.member.exception.MemberExceptionCode.EXIST_NICKNAME;
 import static kr.ontherec.authorization.member.exception.MemberExceptionCode.EXIST_PHONE_NUMBER;
 import static kr.ontherec.authorization.member.exception.MemberExceptionCode.EXIST_USERNAME;
-import static org.hamcrest.Matchers.endsWith;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
@@ -32,12 +30,12 @@ class MemberControllerTest extends IntegrationTest {
     @DisplayName("사용자 회원가입 성공")
     void signUp() {
         MemberSignUpRequestDto dto = new MemberSignUpRequestDto(
-                "new",
-                "password",
-                null,
-                "new",
-                "010-0000-0001",
-                null
+                "newMember",
+                "newPassword",
+                "newMember",
+                "newMember",
+                "01000000001",
+                "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/logo-symbol.jpg"
         );
 
         given(getSpec())
@@ -67,7 +65,7 @@ class MemberControllerTest extends IntegrationTest {
                                                 .description("닉네임"),
                                         fieldWithPath("phoneNumber")
                                                 .type(JsonFieldType.STRING)
-                                                .description("전화번호"),
+                                                .description("전화번호 (- 제외)"),
                                         fieldWithPath("picture")
                                                 .type(JsonFieldType.STRING)
                                                 .description("프로필 사진 URL")
@@ -77,7 +75,8 @@ class MemberControllerTest extends IntegrationTest {
                 .post("/members")
         .then()
                 .statusCode(HttpStatus.CREATED.value())
-                        .header("Location", startsWith("/v1/members"));
+                .header("Location", equalTo("/v1/members/me"))
+                .body(notNullValue());
     }
 
     @Test
@@ -85,11 +84,11 @@ class MemberControllerTest extends IntegrationTest {
     void signUpWithDuplicatedUsername() {
         MemberSignUpRequestDto dto = new MemberSignUpRequestDto(
                 "test",
-                "password",
-                null,
-                "new",
-                "010-0000-0001",
-                null
+                "newPassword",
+                "newMember",
+                "newMember",
+                "01000000001",
+                "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/logo-symbol.jpg"
         );
 
         given()
@@ -106,12 +105,12 @@ class MemberControllerTest extends IntegrationTest {
     @DisplayName("사용자 회원가입 실패 - 중복된 닉네임")
     void signUpWithDuplicatedNickname() {
         MemberSignUpRequestDto dto = new MemberSignUpRequestDto(
-                "new",
-                "password",
-                null,
+                "newMember",
+                "newPassword",
+                "newMember",
                 "test",
-                "010-0000-0001",
-                null
+                "01000000001",
+                "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/logo-symbol.jpg"
         );
 
         given()
@@ -128,12 +127,12 @@ class MemberControllerTest extends IntegrationTest {
     @DisplayName("사용자 회원가입 실패 - 중복된 전화번호")
     void signUpWithDuplicatedPhoneNumber() {
         MemberSignUpRequestDto dto = new MemberSignUpRequestDto(
-                "new",
-                "password",
-                null,
-                "new",
-                "010-0000-0000",
-                null
+                "newMember",
+                "newPassword",
+                "newMember",
+                "newMember",
+                "01000000000",
+                "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/logo-symbol.jpg"
         );
 
         given()
@@ -151,11 +150,11 @@ class MemberControllerTest extends IntegrationTest {
     void update() {
 
         MemberUpdateRequestDto dto = new MemberUpdateRequestDto(
-                "password",
-                null,
-                "new",
-                "010-0000-0001",
-                null
+                "newPassword",
+                "newMember",
+                "newMember",
+                "01000000001",
+                "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/logo-symbol.jpg"
         );
 
         given(getSpec())
@@ -172,7 +171,7 @@ class MemberControllerTest extends IntegrationTest {
                                 .requestFields(
                                         fieldWithPath("password")
                                                 .type(JsonFieldType.STRING)
-                                                .description("비밀번호")
+                                                .description("새 비밀번호")
                                                 .optional(),
                                         fieldWithPath("name")
                                                 .type(JsonFieldType.STRING)
@@ -184,7 +183,7 @@ class MemberControllerTest extends IntegrationTest {
                                                 .optional(),
                                         fieldWithPath("phoneNumber")
                                                 .type(JsonFieldType.STRING)
-                                                .description("전화번호")
+                                                .description("전화번호 (- 제외)")
                                                 .optional(),
                                         fieldWithPath("picture")
                                                 .type(JsonFieldType.STRING)
@@ -201,11 +200,11 @@ class MemberControllerTest extends IntegrationTest {
     @DisplayName("내 정보 수정 실패 - 중복된 닉네임")
     void updateWithDuplicatedNickname() {
         MemberUpdateRequestDto dto = new MemberUpdateRequestDto(
-                "password",
-                null,
+                "newPassword",
+                "newMember",
                 "test",
-                "010-0000-0001",
-                null
+                "01000000001",
+                "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/logo-symbol.jpg"
         );
 
         given()
@@ -223,11 +222,11 @@ class MemberControllerTest extends IntegrationTest {
     @DisplayName("내 정보 수정 실패 - 중복된 전화번호")
     void updateWithDuplicatedPhoneNumber() {
         MemberUpdateRequestDto dto = new MemberUpdateRequestDto(
-                "password",
-                null,
-                "new",
-                "010-0000-0000",
-                null
+                "newPassword",
+                "newMember",
+                "newMember",
+                "01000000000",
+                "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/logo-symbol.jpg"
         );
 
         given()

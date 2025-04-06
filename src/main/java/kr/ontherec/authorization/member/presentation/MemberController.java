@@ -22,13 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/members")
 public class MemberController {
     private final MemberService memberService;
-    private final MemberMapper mapper = MemberMapper.INSTANCE;
+    private final MemberMapper memberMapper = MemberMapper.INSTANCE;
 
     @PostMapping
-    public ResponseEntity<Void> signUp(@Valid @RequestBody MemberSignUpRequestDto requestDto) {
-        Member newMember = mapper.signUpRequestDtoToEntity(requestDto);
-        Long id = memberService.signUp(newMember);
-        return ResponseEntity.created(URI.create("/v1/members/" + id)).build();
+    public ResponseEntity<Long> signUp(@Valid @RequestBody MemberSignUpRequestDto requestDto) {
+        Member newMember = memberMapper.signUpRequestDtoToEntity(requestDto);
+        Member member = memberService.signUp(newMember);
+        return ResponseEntity.created(URI.create("/v1/members/me")).body(member.getId());
     }
 
     @PatchMapping("/me")

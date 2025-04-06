@@ -44,8 +44,9 @@ public class GoogleStrategy implements ClientRegistrationStrategy{
         private Member toMember() {
             return Member.builder()
                     .username(sub)
-                    .picture(picture)
                     .name(name)
+                    .nickname(name)
+                    .picture(picture)
                     .build();
         }
     }

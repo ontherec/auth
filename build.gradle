@@ -40,14 +40,6 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
-	// dev
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-
-	// mapper
-	implementation 'org.mapstruct:mapstruct:1.6.2'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.2'
-
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -67,6 +59,13 @@ dependencies {
 	implementation 'org.tinylog:tinylog-api:2.7.0'
 	implementation 'org.tinylog:tinylog-impl:2.7.0'
 	implementation 'org.tinylog:slf4j-tinylog:2.7.0'
+
+	// dev
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.mapstruct:mapstruct:1.6.3'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
 tasks.named('test') {
