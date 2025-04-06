@@ -38,11 +38,11 @@ public class NaverStrategy implements ClientRegistrationStrategy{
 
         private Member toMember() {
             return Member.builder()
-                    .username(response.id)
-                    .nickname(response.nickname)
-                    .picture(response.profile_image)
-                    .phoneNumber(response.mobile)
+                    .username(CLIENT_REGISTRATION_ID + "-" + response.id)
+                    .nickname(CLIENT_REGISTRATION_ID + "-" + response.id)
                     .name(response.name)
+                    .phoneNumber(response.mobile)
+                    .picture(response.profile_image)
                     .build();
         }
     }

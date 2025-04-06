@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new SecurityException(SecurityExceptionCode.UNAUTHORIZED));
 
         List<GrantedAuthority> authorities = member.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getAuthority().name()))
+                .map(role -> new SimpleGrantedAuthority(role.toString()))
                 .collect(Collectors.toList());
 
         return new User(member.getUsername(), member.getPassword(), authorities);

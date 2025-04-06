@@ -1,28 +1,23 @@
 package kr.ontherec.authorization.member.domain;
 
-import static jakarta.persistence.CascadeType.ALL;
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import java.util.Set;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Entity
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Setter
+@Entity @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter @Setter
+@EntityListeners(AuditingEntityListener.class)
 public class Member {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -41,11 +36,24 @@ public class Member {
     @Column(unique = true, nullable = false)
     private String nickname;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String phoneNumber;
 
     private String picture;
 
-    @OneToMany(mappedBy = "member", fetch = EAGER, cascade = ALL, orphanRemoval = true)
-    private Set<Role> roles;
+    @ElementCollection(fetch = EAGER)
+    @Enumerated(STRING)
+    @Column
+    @Builder.Default
+    private Set<Role> roles = new HashSet<>();
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    @Builder.Default
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @LastModifiedDate
+    @Column(nullable = false)
+    @Builder.Default
+    private LocalDateTime modifiedAt = LocalDateTime.now();
 }

@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Long signUp(Member member) {
+    public Member signUp(Member member) {
         if (memberRepository.existsByUsername(member.getUsername()))
             throw new MemberException(EXIST_USERNAME);
 
@@ -36,7 +36,7 @@ public class MemberServiceImpl implements MemberService {
         if(memberRepository.existsByPhoneNumber(member.getPhoneNumber()))
             throw new MemberException(EXIST_PHONE_NUMBER);
 
-        return memberRepository.save(member).getId();
+        return memberRepository.save(member);
     }
 
     @Override

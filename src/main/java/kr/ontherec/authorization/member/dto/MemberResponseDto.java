@@ -1,7 +1,7 @@
 package kr.ontherec.authorization.member.dto;
 
 import java.util.Set;
-import kr.ontherec.authorization.member.domain.Authority;
+import kr.ontherec.authorization.member.domain.Role;
 
 public record MemberResponseDto(
         Long id,
@@ -10,5 +10,5 @@ public record MemberResponseDto(
         String nickname,
         String phoneNumber,
         String picture,
-        Set<Authority> roles
+        Set<Role> roles
 ) {}

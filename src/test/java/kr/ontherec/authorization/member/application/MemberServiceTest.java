@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 import kr.ontherec.authorization.infra.UnitTest;
 import kr.ontherec.authorization.member.domain.Member;
+import kr.ontherec.authorization.member.dto.MemberSignUpRequestDto;
 import kr.ontherec.authorization.member.dto.MemberUpdateRequestDto;
 import kr.ontherec.authorization.member.exception.MemberException;
 import kr.ontherec.authorization.member.exception.MemberExceptionCode;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @UnitTest
 class MemberServiceTest {
+    private final MemberMapper memberMapper = MemberMapper.INSTANCE;
 
     @Autowired
     private MemberService memberService;
@@ -53,11 +55,15 @@ class MemberServiceTest {
     @DisplayName("회원가입 성공")
     void registerNewMember() {
         // given
-        Member newMember = Member.builder()
-                .username("new")
-                .nickname("new")
-                .phoneNumber("010-0000-0001")
-                .build();
+        MemberSignUpRequestDto dto = new MemberSignUpRequestDto(
+                "newMember",
+                "newPassword",
+                "newMember",
+                "newMember",
+                "010-0000-0001",
+                "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/logo-symbol.jpg"
+        );
+        Member newMember = memberMapper.signUpRequestDtoToEntity(dto);
 
         // when
         memberService.signUp(newMember);
@@ -71,11 +77,15 @@ class MemberServiceTest {
     @DisplayName("회원가입 실패 - 중복된 ID")
     void registerNewMemberWithExistUsername() {
         // given
-        Member newMember = Member.builder()
-                .username("test")
-                .nickname("new")
-                .phoneNumber("010-0000-0001")
-                .build();
+        MemberSignUpRequestDto dto = new MemberSignUpRequestDto(
+                "test",
+                "newPassword",
+                "newMember",
+                "newMember",
+                "010-0000-0001",
+                "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/logo-symbol.jpg"
+        );
+        Member newMember = memberMapper.signUpRequestDtoToEntity(dto);
 
         // when
         Throwable throwable = catchThrowable(() -> memberService.signUp(newMember));
@@ -90,11 +100,16 @@ class MemberServiceTest {
     @DisplayName("회원가입 실패 - 중복된 닉네임")
     void registerNewMemberWithDuplicatedNickname() {
         // given
-        Member newMember = Member.builder()
-                .username("new")
-                .nickname("test")
-                .phoneNumber("010-0000-0001")
-                .build();
+        MemberSignUpRequestDto dto = new MemberSignUpRequestDto(
+                "newMember",
+                "newPassword",
+                "newMember",
+                "test",
+                "010-0000-0001",
+                "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/logo-symbol.jpg"
+        );
+        Member newMember = memberMapper.signUpRequestDtoToEntity(dto);
+
 
         // when
         Throwable throwable = catchThrowable(() -> memberService.signUp(newMember));
@@ -109,11 +124,16 @@ class MemberServiceTest {
     @DisplayName("회원가입 실패 - 중복된 전화번호")
     void registerNewMemberWithDuplicatedPhoneNumber() {
         // given
-        Member newMember = Member.builder()
-                .username("new")
-                .nickname("new")
-                .phoneNumber("010-0000-0000")
-                .build();
+        MemberSignUpRequestDto dto = new MemberSignUpRequestDto(
+                "newMember",
+                "newPassword",
+                "newMember",
+                "newMember",
+                "010-0000-0000",
+                "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/logo-symbol.jpg"
+        );
+        Member newMember = memberMapper.signUpRequestDtoToEntity(dto);
+
 
         // when
         Throwable throwable = catchThrowable(() -> memberService.signUp(newMember));
@@ -125,15 +145,15 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("내 정보 수정 성공")
+    @DisplayName("사용자 정보 수정 성공")
     void update() {
         // given
         MemberUpdateRequestDto dto = new MemberUpdateRequestDto(
-                "password",
-                "new",
-                "new",
+                "newPassword",
+                "newMember",
+                "newMember",
                 "010-0000-0001",
-                null
+                "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/poster-1.png"
         );
         String username = "test";
 
@@ -149,15 +169,15 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("내 정보 수정 실패 - 중복된 닉네임")
+    @DisplayName("사용자 정보 수정 실패 - 중복된 닉네임")
     void updateWithDuplicatedNickname() {
         // given
         MemberUpdateRequestDto dto = new MemberUpdateRequestDto(
-                "password",
-                "new",
+                "newPassword",
+                "newMember",
                 "test",
                 "010-0000-0001",
-                null
+                "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/poster-1.png"
         );
         String username = "test";
 
@@ -171,15 +191,15 @@ class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("내 정보 수정 실패 - 중복된 전화번호")
+    @DisplayName("사용자 정보 수정 실패 - 중복된 전화번호")
     void updateWithDuplicatedPhoneNumber() {
         // given
         MemberUpdateRequestDto dto = new MemberUpdateRequestDto(
-                "password",
-                "new",
-                "new",
+                "newPassword",
+                "newMember",
+                "newMember",
                 "010-0000-0000",
-                null
+                "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/poster-1.png"
         );
         String username = "test";
 

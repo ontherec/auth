@@ -1,11 +1,7 @@
 package kr.ontherec.authorization.security;
 
-import java.util.Set;
-import java.util.stream.Collectors;
 import kr.ontherec.authorization.member.application.MemberService;
-import kr.ontherec.authorization.member.domain.Authority;
 import kr.ontherec.authorization.member.domain.Member;
-import kr.ontherec.authorization.member.domain.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -29,15 +25,12 @@ public final class FederatedIdentityIdTokenCustomizer implements OAuth2TokenCust
 
         if (context.getTokenType().getValue().equals(OidcParameterNames.ID_TOKEN)) {
             Member findMember = memberService.getByUsername(context.getPrincipal().getName());
-            Set<Authority> roles = findMember.getRoles().stream()
-                    .map(Role::getAuthority)
-                    .collect(Collectors.toSet());
 
             context.getClaims().claims((claims) -> {
                 claims.put("name", findMember.getName());
                 claims.put("nickname", findMember.getNickname());
                 claims.put("picture", findMember.getPicture());
-                claims.put("roles", roles);
+                claims.put("roles", findMember.getRoles());
             });
         }
     }
