@@ -60,7 +60,7 @@ class MemberServiceTest {
                 "newPassword",
                 "newMember",
                 "newMember",
-                "01000000001",
+                "010-0000-0001",
                 "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/logo-symbol.jpg"
         );
         Member newMember = memberMapper.signUpRequestDtoToEntity(dto);
@@ -82,7 +82,7 @@ class MemberServiceTest {
                 "newPassword",
                 "newMember",
                 "newMember",
-                "01000000001",
+                "010-0000-0001",
                 "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/logo-symbol.jpg"
         );
         Member newMember = memberMapper.signUpRequestDtoToEntity(dto);
@@ -105,7 +105,7 @@ class MemberServiceTest {
                 "newPassword",
                 "newMember",
                 "test",
-                "01000000001",
+                "010-0000-0001",
                 "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/logo-symbol.jpg"
         );
         Member newMember = memberMapper.signUpRequestDtoToEntity(dto);
@@ -129,7 +129,7 @@ class MemberServiceTest {
                 "newPassword",
                 "newMember",
                 "newMember",
-                "01000000000",
+                "010-0000-0000",
                 "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/logo-symbol.jpg"
         );
         Member newMember = memberMapper.signUpRequestDtoToEntity(dto);
@@ -152,7 +152,7 @@ class MemberServiceTest {
                 "newPassword",
                 "newMember",
                 "newMember",
-                "01000000001",
+                "010-0000-0001",
                 "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/poster-1.png"
         );
         String username = "test";
@@ -176,7 +176,7 @@ class MemberServiceTest {
                 "newPassword",
                 "newMember",
                 "test",
-                "01000000001",
+                "010-0000-0001",
                 "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/poster-1.png"
         );
         String username = "test";
@@ -198,7 +198,7 @@ class MemberServiceTest {
                 "newPassword",
                 "newMember",
                 "newMember",
-                "01000000000",
+                "010-0000-0000",
                 "https://d3j0mzt56d6iv2.cloudfront.net/images/o/test/poster-1.png"
         );
         String username = "test";
