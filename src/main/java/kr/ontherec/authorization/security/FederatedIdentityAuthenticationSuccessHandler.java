@@ -3,10 +3,8 @@ package kr.ontherec.authorization.security;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import kr.ontherec.authorization.member.application.MemberService;
+import kr.ontherec.authorization.member.dao.MemberRepository;
 import kr.ontherec.authorization.member.domain.Member;
 import kr.ontherec.authorization.security.strategy.ClientRegistrationStrategy;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +18,10 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -27,6 +29,7 @@ public class FederatedIdentityAuthenticationSuccessHandler implements Authentica
 
 	private final AuthenticationSuccessHandler delegate = new SavedRequestAwareAuthenticationSuccessHandler();
 	private final MemberService memberService;
+	private final MemberRepository memberRepository;
 	private final List<ClientRegistrationStrategy> strategies;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -42,7 +45,8 @@ public class FederatedIdentityAuthenticationSuccessHandler implements Authentica
 			for (ClientRegistrationStrategy strategy : strategies) {
 				if (strategy.isSupport(clientRegistrationId)) {
 					Member newMember = strategy.parseClaimsToMember(claims);
-					memberService.signUp(newMember);
+					if(!memberRepository.existsByUsername(newMember.getUsername()))
+						memberService.signUp(newMember);
 				}
 			}
 		}
