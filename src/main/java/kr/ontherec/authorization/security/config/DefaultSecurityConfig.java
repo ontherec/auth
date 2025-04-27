@@ -58,10 +58,14 @@ public class DefaultSecurityConfig {
                         .anyRequest().authenticated())
                 .addFilterBefore(new ApiKeyAuthenticationFilter(API_KEY), UsernamePasswordAuthenticationFilter.class)
                 .httpBasic(AbstractHttpConfigurer::disable)
-                .formLogin(flc -> flc.loginPage("/login"))
+                .formLogin(flc -> flc
+                        .loginPage("/login")
+                        .defaultSuccessUrl("https://ontherec.kr"))
                 .oauth2Login(olc -> olc
                         .loginPage("/login")
-                        .successHandler(authenticationSuccessHandler))
+                        .successHandler(authenticationSuccessHandler)
+                        .defaultSuccessUrl("https://ontherec.kr")
+                )
                 .oauth2ResourceServer(orc -> orc
                         .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
                         .jwt(jc -> jc.jwtAuthenticationConverter(jwtAuthenticationConverter)));
